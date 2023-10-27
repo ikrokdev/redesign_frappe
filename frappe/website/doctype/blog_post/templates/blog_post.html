@@ -22,7 +22,7 @@
 				<time datetime="{{ published_on }}">{{ frappe.format_date(published_on) }}</time>
 				{%- if read_time -%}
 				&nbsp;&middot;
-				<span>{{ read_time }} min read</span>
+				<span>{{ _('{0} min read').format(read_time) }}</span>
 				{%- endif -%}
 			</div>
 		</div>
