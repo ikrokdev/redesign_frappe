@@ -427,8 +427,9 @@
 		</g>
 	</symbol>
 
-	<symbol viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" id="icon-search">
-		<path d="M7.389 12.278a4.889 4.889 0 1 0 0-9.778 4.889 4.889 0 0 0 0 9.778zM13.5 13.5l-2.658-2.658" stroke-linecap="round" stroke-linejoin="round"></path>
+	<symbol width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" id="icon-search">
+		<path d="M7.33301 13.3334C10.6467 13.3334 13.333 10.6471 13.333 7.33337C13.333 4.01967 10.6467 1.33337 7.33301 1.33337C4.0193 1.33337 1.33301 4.01967 1.33301 7.33337C1.33301 10.6471 4.0193 13.3334 7.33301 13.3334Z" stroke="#A8ABC1" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M12.6196 13.7932C12.973 14.8599 13.7796 14.9666 14.3996 14.0332C14.9663 13.1799 14.593 12.4799 13.5663 12.4799C12.8063 12.4732 12.3796 13.0666 12.6196 13.7932Z" stroke="#A8ABC1" stroke-linecap="round" stroke-linejoin="round"/>
 	</symbol>
 
 	<symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="icon-website">
