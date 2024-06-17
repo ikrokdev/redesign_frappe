@@ -52,6 +52,61 @@ select.form-control {
 	padding-block: 0;
 }
 
+.frappe-control .control-input{
+	.action-btn, .link-btn{
+		padding: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		right: 12px;
+	}
+}
+.frappe-control[data-fieldtype="Select"] .control-input .select-icon,
+.frappe-control[data-fieldtype="Select"] .control-input .select-icon {
+  top: 50%;
+  transform: translateY(-50%);
+  right: 12px;
+
+  svg{
+	// --icon-stroke:var(--redisign-neutral-medium-default, #9DA2CB);
+
+	use{
+		stroke: var(--redisign-neutral-medium-default, #9DA2CB);
+	}
+  }
+}
+
+.form-section.card-section .section-head{
+	color: var(--redisign-neutral-dark-default);
+	padding: 8px 0 0;
+	margin-bottom: 24px;
+}
+
+.tab-pane .card-section{
+	padding: 24px;
+
+	.form-section .section-body:first-child{
+		margin-top: 0;
+	}
+
+	.form-group{
+		margin-bottom: 20px;
+	}
+
+	.section-body{
+		width: calc(100% + 10px * 2);
+		margin-left: -10px;
+		margin-right: -10px;
+	}
+	.form-section.card-section{
+		.form-column.col-sm-4{
+			padding: 10px;
+
+			.form-group{
+				margin-bottom: 10px;
+			}
+		}
+	}
+}
 /* table multiselect */
 .table-multiselect {
 	display: flex;
@@ -93,10 +148,13 @@ select.form-control {
 	padding: var(--input-padding);
 	background-color: var(--redisign-neutral-lightest-default, #F5F6FF);
 	color: var(--redisign-neutral-medium-default, #9DA2CB);
+
+	.icon, .es-icon{--icon-stroke:var(--redisign-neutral-medium-default, #9DA2CB);}
 }
 
 .frappe-control.input-max-width .input-with-feedback{
 	background-color: var(--redisign-neutral-lightest-default, #F5F6FF);
+	.icon, .es-icon{--icon-stroke:var(--redisign-neutral-medium-default, #9DA2CB);}
 }
 
 /* multiselect list */
@@ -254,7 +312,7 @@ select.form-control {
 		@include get_textstyle("base", "regular");
 
 		.es-icon {
-			margin-right: 8px;
+			margin-right: 12px;
 		}
 		.btn {
 			padding: 0px 8px;
