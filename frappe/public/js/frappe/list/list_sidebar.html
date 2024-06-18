@@ -15,9 +15,9 @@
 				>
 					<span class="selected-view ellipsis">
 					</span>
-					<span>
+					<span class="icon-wrap">
 						<svg class="icon icon-xs">
-							<use href="#icon-select"></use>
+							<use href="#es-line-down"></use>
 						</svg>
 					</span>
 				</a>
@@ -30,9 +30,12 @@
 		</div>
 	</div>
 
-	<div class="sidebar-section filter-section">
-		<li class="sidebar-label">
-			{{ __("Filter By") }}
+	<div class="sidebar-section filter-section filter-sidebar-section">
+		<li class="sidebar-label filter-section-title">
+			<p class="sidebar-label-title">
+				{{ __("Filter By") }}
+			</p>
+			<div class="edit-btn-wrap add-list-group-by sidebar-action"></div>
 		</li>
 
 		<div class="list-group-by">
@@ -48,9 +51,9 @@
 					href="#"
 				>
 					<span>{{ __("Tags") }}</span>
-					<span>
+					<span class="icon-wrap">
 						<svg class="icon icon-xs">
-							<use href="#icon-select"></use>
+							<use href="#es-line-down"></use>
 						</svg>
 					</span>
 				</a>
@@ -68,9 +71,12 @@
 		</div>
 	</div>
 
-	<div class="sidebar-section save-filter-section">
-		<li class="sidebar-label">
-			{{ __("Save Filter") }}
+	<div class="sidebar-section filter-section save-filter-section filter-sidebar-section">
+		<li class="sidebar-label filter-section-title">
+			<p class="sidebar-label-title">
+				{{ __("Save Filter") }}
+			</p>
+			<div class="edit-btn-wrap add-list-group-by sidebar-action"></div>
 		</li>
 		<li class="list-filters list-link"></li>
 </ul>

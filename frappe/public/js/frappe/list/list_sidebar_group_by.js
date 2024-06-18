@@ -51,18 +51,34 @@ frappe.views.ListGroupBy = class ListGroupBy {
 	}
 
 	make_wrapper() {
+		this.$title = this.sidebar.sidebar.find(".sidebar-label .edit-btn-wrap");
+		let edit =`
+			<button class="btn btn-link btn-edit ">
+			${__("Edit Filters")}
+			</button>
+		`
+		this.$title.html(edit);
 		this.$wrapper = this.sidebar.sidebar.find(".list-group-by");
 		let html = `
 			<div class="list-group-by-fields">
 			</div>
-			<li class="add-list-group-by sidebar-action">
-				<a class="add-group-by">
-					${__("Edit Filters")}
-				</a>
-			</li>
 		`;
 		this.$wrapper.html(html);
 	}
+
+	// make_wrapper() {
+	// 	this.$wrapper = this.sidebar.sidebar.find(".list-group-by");
+	// 	let html = `
+	// 		<div class="list-group-by-fields">
+	// 		</div>
+	// 		<li class="add-list-group-by sidebar-action">
+	// 			<a class="add-group-by">
+	// 				${__("Edit Filters")}
+	// 			</a>
+	// 		</li>
+	// 	`;
+	// 	this.$wrapper.html(html);
+	// }
 
 	render_group_by_items() {
 		let get_item_html = (fieldname) => {
@@ -86,7 +102,8 @@ frappe.views.ListGroupBy = class ListGroupBy {
 					data-label="${label}" data-fieldname="${fieldname}" data-fieldtype="${fieldtype}"
 					href="#" onclick="return false;">
 						<span class="ellipsis">${__(label)}</span>
-						<span>${frappe.utils.icon("select", "xs")}</span>
+						<span class="icon-wrap">${frappe.utils.icon("down", "xs")}</span>
+						
 					</a>
 					<ul class="dropdown-menu group-by-dropdown" role="menu">
 					</ul>
