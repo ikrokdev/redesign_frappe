@@ -612,8 +612,11 @@ body[data-route^="Module"] .main-menu {
 .filter-section.filter-sidebar-section {
 
 	padding-bottom: 1.5rem;
-	margin-bottom: 1.5rem;
-	border-bottom: 1px solid var(--redisign-neutral-light-default, #DBDFFF);
+
+	&:not(:last-child) {
+		margin-bottom: 1.5rem;
+		border-bottom: 1px solid var(--redisign-neutral-light-default, #DBDFFF);
+	}
 
 	.sidebar-label-title {
 		margin-bottom: 0;
@@ -657,10 +660,26 @@ body[data-route^="Module"] .main-menu {
 		}
 	}
 
+	.list-filters.list-link {
+		margin-top: .75rem;
+	}
+
+	.control-input {
+		input {
+			border-radius: 0.5rem;
+			background: var(--redisign-neutral-lightest-default, #F5F6FF);
+			min-height: 2.5rem;
+			padding: 0.8125rem 1rem;
+			color: var(--redisign-neutral-medium-default, #9DA2CB);
+		}
+	}
+
 	.sidebar-action,
 	.edit-btn-wrap {
 		margin-top: 0;
 
+		.add-group-by,
+		.list-tag-preview,
 		.btn-link.btn-edit {
 			margin: 0;
 			padding: 0;
@@ -669,6 +688,8 @@ body[data-route^="Module"] .main-menu {
 			font-style: normal;
 			font-weight: 500;
 			line-height: 148%;
+
+
 			/* 1.11rem */
 		}
 	}
@@ -677,5 +698,25 @@ body[data-route^="Module"] .main-menu {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.saved-filters {
+
+		.list-sidebar-button.btn:not(.btn-md):not(.btn-lg),
+		.list-link.list-sidebar-button.btn:not(.btn-md):not(.btn-lg) {
+			color: var(--redisign-neutral-dark-default, #030D1E);
+			padding: 0.25rem 0.5rem;
+			font-size: 0.875rem;
+			width: fit-content;
+			min-height: 1.6875rem;
+
+			a {
+				color: var(--redisign-neutral-dark-default, #030D1E);
+			}
+
+			.remove {
+				margin-left: .25rem;
+			}
+		}
 	}
 }

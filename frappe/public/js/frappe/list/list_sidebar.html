@@ -32,14 +32,34 @@
 
 	<div class="sidebar-section filter-section filter-sidebar-section">
 		<li class="sidebar-label filter-section-title">
-			<p class="sidebar-label-title">
+			<p class="sidebar-label-title ">
 				{{ __("Filter By") }}
 			</p>
-			<div class="edit-btn-wrap add-list-group-by sidebar-action"></div>
+			<div class="edit-btn-wrap add-list-group-by sidebar-action">
+				<div class="add-list-group-by sidebar-action">
+					<a class="add-group-by">
+						${__("Edit")}
+					</a>
+				</div>
+			</div>
 		</li>
 
 		<div class="list-group-by">
 		</div>
+	</div>
+	
+	<div class="sidebar-section filter-section filter-sidebar-section">
+		<div class="sidebar-label filter-section-title">
+			<p class="sidebar-label-title ">
+				{{ __("Apply Tags") }}
+			</p>
+			<div class="edit-btn-wrap sidebar-action">
+				<div class="">
+					<a class="list-tag-preview">{{ __("Show Tags") }}</a>
+				</div>
+			</div>
+		</div>
+		
 
 		<div class="list-tags">
 			<li class="list-stats list-link">
@@ -64,9 +84,6 @@
 					<div class="stat-result">
 					</div>
 				</ul>
-			</li>
-			<li class="sidebar-action show-tags">
-				<a class="list-tag-preview">{{ __("Show Tags") }}</a>
 			</li>
 		</div>
 	</div>

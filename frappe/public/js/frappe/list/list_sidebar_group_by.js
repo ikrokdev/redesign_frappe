@@ -51,34 +51,14 @@ frappe.views.ListGroupBy = class ListGroupBy {
 	}
 
 	make_wrapper() {
-		this.$title = this.sidebar.sidebar.find(".sidebar-label .edit-btn-wrap");
-		let edit =`
-			<button class="btn btn-link btn-edit ">
-			${__("Edit Filters")}
-			</button>
-		`
-		this.$title.html(edit);
 		this.$wrapper = this.sidebar.sidebar.find(".list-group-by");
 		let html = `
 			<div class="list-group-by-fields">
 			</div>
+		
 		`;
 		this.$wrapper.html(html);
 	}
-
-	// make_wrapper() {
-	// 	this.$wrapper = this.sidebar.sidebar.find(".list-group-by");
-	// 	let html = `
-	// 		<div class="list-group-by-fields">
-	// 		</div>
-	// 		<li class="add-list-group-by sidebar-action">
-	// 			<a class="add-group-by">
-	// 				${__("Edit Filters")}
-	// 			</a>
-	// 		</li>
-	// 	`;
-	// 	this.$wrapper.html(html);
-	// }
 
 	render_group_by_items() {
 		let get_item_html = (fieldname) => {
