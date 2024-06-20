@@ -37,14 +37,14 @@ use.like-icon {
 	fill: var(--invert-neutral);
 }
 
-.icon > .close-alt {
+.icon>.close-alt {
 	fill: var(--gray-500);
 }
 
 .liked {
 	use.like-icon {
-		--icon-stroke: var(--red-500);
-		fill: var(--icon-stroke);
+		--icon-stroke: var(--redesign-dark-orange, #FD995D);
+		stroke: var(--redesign-dark-orange, #FD995D);
 	}
 }
 

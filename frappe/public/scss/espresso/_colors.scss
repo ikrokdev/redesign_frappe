@@ -105,6 +105,8 @@ $light-yellow: #fef4e2;
 	--redisign-neutral-ultra-light-focus: #F6F6FC;
 	--redisign-neutral-ultra-light-disabled: #FBFBFE;
 
+	--redesign-dark-orange: #FD995D;
+
 	--gray-50: #f8f8f8;
 	--gray-100: #f3f3f3;
 	--gray-200: #ededed;
@@ -261,25 +263,17 @@ $light-yellow: #fef4e2;
 	--black-overlay-900: rgba(0, 0, 0, 0.9);
 
 	// gradients
-	--linear-black: linear-gradient(
-		to bottom,
-		rgba(46, 46, 46, 0.18) 0%,
-		rgba(36, 36, 36, 0.14) 100%
-	);
-	--linear-blue: linear-gradient(
-		to bottom,
-		rgba(17, 142, 245, 0.067) 0%,
-		rgba(7, 127, 247, 0.029) 100%
-	);
+	--linear-black: linear-gradient(to bottom,
+			rgba(46, 46, 46, 0.18) 0%,
+			rgba(36, 36, 36, 0.14) 100%);
+	--linear-blue: linear-gradient(to bottom,
+			rgba(17, 142, 245, 0.067) 0%,
+			rgba(7, 127, 247, 0.029) 100%);
 	--angular-white: conic-gradient(rgba(255, 255, 255, 1) 72.38%, rgba(255, 255, 255, 1) 99.87%);
 	--angular-black: conic-gradient(rgba(56, 56, 56, 0.22) 72.38%, rgba(56, 56, 56, 0.22) 99.87%);
-	--angular-green: conic-gradient(
-		rgba(23, 117, 75, 0.092) 72.38%,
-		rgba(23, 117, 75, 0.092) 99.87%
-	);
-	--angular-red: conic-gradient(
-		rgba(205, 41, 41, 0.804) 72.38%,
-		rgba(205, 41, 41, 0.804) 99.87%
-	);
+	--angular-green: conic-gradient(rgba(23, 117, 75, 0.092) 72.38%,
+			rgba(23, 117, 75, 0.092) 99.87%);
+	--angular-red: conic-gradient(rgba(205, 41, 41, 0.804) 72.38%,
+			rgba(205, 41, 41, 0.804) 99.87%);
 	--angular-blue: conic-gradient(rgba(0, 110, 219, 0) 72.38%, rgba(0, 110, 219, 0) 99.87%);
 }
