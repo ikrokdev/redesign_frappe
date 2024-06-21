@@ -39,8 +39,8 @@
 	</symbol>
 
 	<symbol viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" id="icon-arrow-right" stroke-width="1.2">
-		<path d="M10 6.00223L1 5.99973" stroke-linecap="round" stroke-linejoin="round"/>
-		<path d="M7.70015 3.00244L10.7001 6.00244L7.70015 9.00244" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M10 6.00223L1 5.99973" stroke-linecap="round" stroke-linejoin="round"/ stroke="var(--icon-stroke)">
+		<path d="M7.70015 3.00244L10.7001 6.00244L7.70015 9.00244" stroke-linecap="round"  stroke="var(--icon-stroke)" stroke-linejoin="round"/>
 	</symbol>
 
 	<symbol viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" id="icon-move">
@@ -80,7 +80,7 @@
 	</symbol>
 
 	<symbol viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" id="icon-select">
-		<path d="M4.5 3.636L6.136 2l1.637 1.636M4.5 8.364L6.136 10l1.637-1.636" stroke-linecap="round" stroke-linejoin="round"></path>
+		<path d="M4.5 3.636L6.136 2l1.637 1.636M4.5 8.364L6.136 10l1.637-1.636" stroke-linecap="round" stroke-linejoin="round" stroke="var(--icon-stroke)"></path>
 	</symbol>
 
 	<symbol viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" id="icon-arrow-up-right">
