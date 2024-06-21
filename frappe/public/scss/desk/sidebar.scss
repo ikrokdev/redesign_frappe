@@ -338,6 +338,11 @@ body[data-route^="Module"] .main-menu {
 		width: 90%;
 	}
 
+	.applied+.group-by-value {
+		width: 90%;
+		padding-left: calc(12px + .25rem);
+	}
+
 	.dropdown-menu {
 		max-height: 300px;
 		overflow-y: auto;
@@ -373,13 +378,13 @@ body[data-route^="Module"] .main-menu {
 
 	.dropdown-menu.has-selected {
 		.dropdown-item {
-			padding-left: var(--padding-xl);
-			padding-right: var(--padding-md);
+			padding-top: .5rem;
+			padding-bottom: .5rem;
 		}
 	}
 
 	.dropdown-search {
-		padding: 8px;
+		// padding: 8px;
 	}
 
 	.stat-no-records {
@@ -705,6 +710,8 @@ body[data-route^="Module"] .main-menu {
 		.list-sidebar-button.btn:not(.btn-md):not(.btn-lg),
 		.list-link.list-sidebar-button.btn:not(.btn-md):not(.btn-lg) {
 			color: var(--redisign-neutral-dark-default, #030D1E);
+			border-radius: 0.125rem;
+			background: var(--redisign-neutral-lightest-active, #EEEFFC);
 			padding: 0.25rem 0.5rem;
 			font-size: 0.875rem;
 			width: fit-content;
