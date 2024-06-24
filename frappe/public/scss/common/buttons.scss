@@ -34,6 +34,19 @@
 	}
 }
 
+@mixin redesign-button-light() {
+	background: var(--neutral-white, #FFF);
+	border: 1px solid var(--redisign-neutral-light-default, #DBDFFF);
+
+	color: var(--redisign-neutral-darker-default, #5C5E75);
+
+	&:active,
+	&:hover {
+		color: var(--redisign-neutral-darker-active, #4E5068);
+		background: 1px solid var(--redisign-neutral-light-default, #DBDFFF);
+	}
+}
+
 .btn-secondary-dark {
 	@include button-variant($background: $gray-600,
 		$border: $gray-600,
@@ -63,9 +76,8 @@
 		$hover-border: $gray-300,
 		$active-background: $gray-300,
 		$active-border: $gray-200);
-
-	color: var(--primary);
-
+	@include redesign-button-light();
+  
 	&:hover,
 	&:active {
 		color: var(--primary);
@@ -77,37 +89,43 @@
 }
 
 .btn.btn-secondary {
-	background-color: var(--control-bg);
-	color: var(--text-color);
+	background-color: transparent;
+	color: var(--redisign-primary-default, #638DFF);
 
 	&:hover,
 	&:active {
-		background-color: var(--btn-default-hover-bg);
-		color: var(--text-color);
+		// background-color: var(--btn-default-hover-bg);
+		color: var(--redisign-primary-focus, #5883F6);
 	}
 }
 
+.btn.btn-default,
+div#driver-popover-item .driver-popover-footer button.btn-default,
 .btn.btn-default {
-	background-color: var(--control-bg);
-	color: var(--text-color);
 
-	&:hover,
-	&:active {
-		background: var(--btn-default-hover-bg);
-		color: var(--text-color);
-	}
+	// background-color: var(--control-bg);
+	// color: var(--text-color);
+
+	// &:hover,
+	// &:active {
+	// 	background: var(--btn-default-hover-bg);
+	// 	color: var(--text-color);
+	// }
+
+	@include redesign-button-light();
+
 }
 
 .btn.btn-primary {
-	background-color: var(--btn-primary);
+	background-color: var(--redisign-primary-default, #638DFF);
 	color: var(--neutral);
 	white-space: nowrap;
 	--icon-stroke: currentColor;
-	--icon-fill-bg: var(--btn-primary);
+	--icon-fill-bg: var(--redisign-primary-default, #638DFF);
 
 	&:active {
-		color: var(--gray-100) !important;
-		background-color: var(--invert-neutral) !important;
+		// color: var(--gray-100) !important;
+		background-color: var(--redisign-primary-active, #5883F6) !important;
 	}
 }
 

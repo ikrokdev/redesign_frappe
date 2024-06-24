@@ -8,7 +8,11 @@ body {
 	color: var(--text-muted);
 	font-weight: var(--weight-regular);
 	letter-spacing: 0.02em;
-	background-color: var(--bg-color);
+	background-color: var(--redisign-neutral-lightest-default, #F5F6FF);
+
+	.layout-main {
+		padding-bottom: 1rem;
+	}
 
 	&.full-width {
 		@include media-breakpoint-up(md) {
@@ -18,6 +22,29 @@ body {
 			}
 		}
 	}
+
+	.page-head .container,
+	.navbar .container,
+	.container.page-body {
+		// padding: 0.5rem 0.75rem;
+		padding-right: max(0.75rem, 15px);
+		padding-left: max(1rem, 24px);
+		max-width: 100% !important;
+		flex: 1 1 auto;
+	}
+
+	.container {
+
+		.page-head-content.row,
+		&.page-body .page-content .row.layout-main {
+			// margin-right: 0;
+			// margin-left: 0;
+
+		}
+
+	}
+
+
 }
 
 a {
