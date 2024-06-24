@@ -6,9 +6,11 @@
 
 .btn {
 	border: none;
+
 	&:not(.btn-md):not(.btn-lg) {
 		padding: 4px 8px;
 	}
+
 	border-radius: var(--border-radius);
 	box-shadow: none;
 	@include get_textstyle("base", "regular");
@@ -24,6 +26,7 @@
 		height: var(--btn-height);
 		padding: 0px;
 		@extend .center-content;
+
 		&.btn-default,
 		&.btn-secondary {
 			min-width: 28px;
@@ -31,39 +34,51 @@
 	}
 }
 
+@mixin redesign-button-light() {
+	background: var(--neutral-white, #FFF);
+	border: 1px solid var(--redisign-neutral-light-default, #DBDFFF);
+
+	color: var(--redisign-neutral-darker-default, #5C5E75);
+
+	&:active,
+	&:hover {
+		color: var(--redisign-neutral-darker-active, #4E5068);
+		background: 1px solid var(--redisign-neutral-light-default, #DBDFFF);
+	}
+}
+
 .btn-secondary-dark {
-	@include button-variant(
-		$background: $gray-600,
+	@include button-variant($background: $gray-600,
 		$border: $gray-600,
 		$hover-background: lighten($gray-600, 1%),
 		$hover-border: $gray-600,
 		$active-background: lighten($gray-600, 1%),
-		$active-border: darken($gray-600, 12.5%)
-	);
+		$active-border: darken($gray-600, 12.5%));
 
 	color: $white;
+
 	&:hover,
 	&:active,
 	&:focus {
 		color: $white;
 	}
+
 	.icon {
 		--icon-stroke: currentColor;
 	}
 }
 
 .btn-primary-light {
-	@include button-variant(
-		// not happy with this
+	@include button-variant( // not happy with this
 		$background: $gray-300,
 		$border: $gray-800,
 		$hover-background: $gray-200,
 		$hover-border: $gray-300,
 		$active-background: $gray-300,
-		$active-border: $gray-200
-	);
+		$active-border: $gray-200);
+	@include redesign-button-light();
 
-	color: var(--primary);
+
 	&:hover,
 	&:active {
 		color: var(--primary);
@@ -75,35 +90,42 @@
 }
 
 .btn.btn-secondary {
-	background-color: var(--control-bg);
-	color: var(--text-color);
+	background-color: transparent;
+	color: var(--redisign-primary-default, #638DFF);
+
 	&:hover,
 	&:active {
-		background-color: var(--btn-default-hover-bg);
-		color: var(--text-color);
+		// background-color: var(--btn-default-hover-bg);
+		color: var(--redisign-primary-focus, #5883F6);
 	}
 }
 
+.btn.btn-default,
+div#driver-popover-item .driver-popover-footer button.btn-default,
 .btn.btn-default {
-	background-color: var(--control-bg);
-	color: var(--text-color);
-	&:hover,
-	&:active {
-		background: var(--btn-default-hover-bg);
-		color: var(--text-color);
-	}
+	// background-color: var(--control-bg);
+	// color: var(--text-color);
+
+	// &:hover,
+	// &:active {
+	// 	background: var(--btn-default-hover-bg);
+	// 	color: var(--text-color);
+	// }
+
+	@include redesign-button-light();
+
 }
 
 .btn.btn-primary {
-	background-color: var(--btn-primary);
+	background-color: var(--redisign-primary-default, #638DFF);
 	color: var(--neutral);
 	white-space: nowrap;
 	--icon-stroke: currentColor;
-	--icon-fill-bg: var(--btn-primary);
+	--icon-fill-bg: var(--redisign-primary-default, #638DFF);
 
 	&:active {
-		color: var(--gray-100) !important;
-		background-color: var(--invert-neutral) !important;
+		// color: var(--gray-100) !important;
+		background-color: var(--redisign-primary-active, #5883F6) !important;
 	}
 }
 
@@ -125,6 +147,7 @@
 		background-color: var(--bg-dark-gray);
 		box-shadow: none;
 	}
+
 	.btn-primary:active {
 		color: var(--gray-900) !important;
 		background-color: var(--invert-neutral) !important;
