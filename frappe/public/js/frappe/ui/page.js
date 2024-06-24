@@ -99,14 +99,14 @@ frappe.ui.Page = class Page {
 				`
 				<div class="row layout-main">
 					<div class="col-lg-2 layout-side-section"></div>
-					<button class="btn-reset sidebar-toggle-btn-internal" style="">
+					${frappe.get_route().includes("Workspaces") ? `<button class="btn-reset sidebar-toggle-btn-internal" style="">
 						<span class="sidebar-toggle-icon">
 							<svg class="es-icon icon-md">
 								<use href="#es-line-sidebar-collapse">
 								</use>
 							</svg>
 						</span>
-					</button>
+					</button>` : ''}
 					<div class="col layout-main-section-wrapper">
 						<div class="layout-main-section"></div>
 						<div class="layout-footer hide"></div>
