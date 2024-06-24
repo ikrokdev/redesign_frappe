@@ -399,11 +399,19 @@ select.input-xs {
 }
 
 .dropdown-menu {
-	padding: 4px;
+	// padding: 4px;
 	@include get_textstyle("base", "regular");
 	max-height: 500px;
 	overflow: auto;
-	border: 1px solid var(--subtle-accent);
+	// border: 1px solid var(--subtle-accent);
+	border-radius: 0.5rem;
+	padding: 1rem;
+	background: var(--neutral-white, #FFF);
+	box-shadow: 0px 1px 35.2px 0px rgba(65, 81, 100, 0.11);
+
+	li {
+		margin-top: .5rem;
+	}
 
 	.dropdown-divider {
 		margin: 4px 0;

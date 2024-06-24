@@ -106,6 +106,7 @@
 .layout-side-section-wrap {
 	position: relative;
 	display: flex;
+	max-height: -webkit-fill-available;
 
 	.layout-side-section {
 		padding-left: 15px;

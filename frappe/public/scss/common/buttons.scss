@@ -18,7 +18,7 @@
 	&:active {
 		// override #dadada that comes from bootstrap (probably) to support dark theme.
 		color: var(--text-color) !important;
-		background-color: var(--control-bg) !important;
+		background-color: var(--redisign-neutral-lightest-active, #EEEFFC) !important;
 		box-shadow: var(--focus-default) !important;
 	}
 
@@ -77,8 +77,7 @@
 		$active-background: $gray-300,
 		$active-border: $gray-200);
 	@include redesign-button-light();
-
-
+  
 	&:hover,
 	&:active {
 		color: var(--primary);
@@ -103,6 +102,7 @@
 .btn.btn-default,
 div#driver-popover-item .driver-popover-footer button.btn-default,
 .btn.btn-default {
+
 	// background-color: var(--control-bg);
 	// color: var(--text-color);
 
