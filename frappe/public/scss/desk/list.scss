@@ -175,6 +175,12 @@
 	width: 100%;
 	color: var(--redisign-neutral-medium-default, #9DA2CB);
 
+	.list-count {
+		font-size: 0.75rem;
+		font-weight: 400;
+		color: var(--redisign-neutral-medium-default, #9DA2CB);
+	}
+
 	&.list-row,
 	&.list-row-head {
 		color: var(--redisign-neutral-medium-default, #9DA2CB);
@@ -230,7 +236,7 @@ $level-margin-right: 8px;
 	flex: 2;
 	justify-content: start;
 
-	a {
+	a:hover {
 		color: var(--text-color);
 	}
 
