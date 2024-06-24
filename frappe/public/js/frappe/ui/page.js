@@ -109,7 +109,8 @@ frappe.ui.Page = class Page {
 				"main",
 				`
 				<div class="row layout-main">
-					<div class="col-lg-2 layout-side-section-wrap"></div>
+					<div class="col-lg-2 layout-side-section-wrap">
+						<div class="layout-side-section"></div>
 						${this.showSidebarToggleButton() ? `<button class="btn-reset sidebar-toggle-btn-internal" style="">
 							<span class="sidebar-toggle-icon">
 								<svg class="es-icon icon-md">
