@@ -81,7 +81,7 @@ frappe.ui.Page = class Page {
 	}
 
 	showSidebarToggleButton() {
-		const isMobile = frappe.is_mobile();
+		const isMobile = frappe.is_mobile() || (window.innerWidth < 992);
 		const isDesk = frappe.get_route().includes("Workspaces");
 
 		if (isMobile || !isDesk) {
