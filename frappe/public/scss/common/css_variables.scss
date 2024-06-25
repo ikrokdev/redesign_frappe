@@ -1,4 +1,4 @@
-$input-height: 28px;
+$input-height: 46px;
 $disabled-input-height: 22px;
 
 :root,
@@ -29,7 +29,7 @@ $disabled-input-height: 22px;
 	// SVG Colors
 	--icon-fill: transparent;
 	--icon-fill-bg: var(--fg-color);
-	--icon-stroke: var(--gray-800);
+	--icon-stroke: var(--redisign-neutral-purple-600);
 
 	// Background Text Color Pairs
 	--bg-blue: var(--blue-100);
@@ -84,7 +84,7 @@ $disabled-input-height: 22px;
 	--card-bg: var(--fg-color);
 	--disabled-text-color: var(--gray-600);
 	--disabled-control-bg: var(--gray-50);
-	--control-bg: var(--gray-100);
+	--control-bg: var(--redisign-neutral-lightest-default, #F5F6FF);
 	--control-bg-on-gray: var(--gray-200);
 	--awesomebar-focus-bg: var(--fg-color);
 	--modal-bg: white;
@@ -102,7 +102,7 @@ $disabled-input-height: 22px;
 	--border-primary: var(--gray-900);
 
 	// Other Colors
-	--sidebar-select-color: var(--gray-100);
+	--sidebar-select-color: var(--redisign-primary-default);
 
 	--scrollbar-thumb-color: var(--gray-400);
 	--scrollbar-track-color: var(--gray-200);
@@ -138,11 +138,9 @@ $disabled-input-height: 22px;
 
 	--checkbox-focus-shadow: 0 0 0 2px var(--gray-300);
 	--checkbox-gradient: linear-gradient(180deg, var(--primary) -124.51%, var(--primary) 100%);
-	--checkbox-disabled-gradient: linear-gradient(
-		180deg,
-		var(--disabled-control-bg) -124.51%,
-		var(--disabled-control-bg) 100%
-	);
+	--checkbox-disabled-gradient: linear-gradient(180deg,
+			var(--disabled-control-bg) -124.51%,
+			var(--disabled-control-bg) 100%);
 
 	// switch
 	--switch-bg: var(--gray-300);

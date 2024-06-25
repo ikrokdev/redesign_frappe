@@ -7,6 +7,36 @@ body {
 	}
 }
 
+// svg:has(> use[href="#icon-clipboard"]){
+// 	stroke: white;
+// }
+
+.desk-sidebar-item.standard-sidebar-item.selected .sidebar-item-icon svg:has(> use),
+.desk-sidebar-item.standard-sidebar-item.selected .drop-icon svg:has(> use)  {
+	stroke: white;
+}
+
+.sidebar-toggle-btn-internal{
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+	box-shadow: -1px 1px 10.9px 0px rgba(54, 60, 89, 0.08);
+	z-index: 99;
+	svg{
+		display: block;
+	}
+}
+
+.sidebar-minimize{
+	max-width: 75px;
+	transition: max-width 0.3s ease;
+	overflow: hidden;
+}
+
+.sidebar-item-minimized{
+	max-width: 45px;
+}
+
 .desk-sidebar {
 	@extend .standard-sidebar;
 
@@ -941,10 +971,11 @@ body {
 			.layout-main-section-wrapper {
 				height: 100%;
 				overflow-y: auto;
-				scrollbar-color: var(--gray-200) transparent;
-				[data-theme="dark"] & {
-					scrollbar-color: var(--gray-800) transparent;
-				}
+				scrollbar-width: none;
+				// scrollbar-color: var(--gray-200) transparent;
+				// [data-theme="dark"] & {
+				// 	scrollbar-color: var(--gray-800) transparent;
+				// }
 
 				&::-webkit-scrollbar-track {
 					background: transparent;
@@ -1001,7 +1032,7 @@ body {
 
 	.standard-sidebar-item {
 		justify-content: space-between;
-		padding: 0px;
+		padding: 10px 12px 10px 12px;
 
 		.sidebar-item-control {
 			> * {
@@ -1041,7 +1072,7 @@ body {
 		.item-anchor {
 			display: flex;
 			overflow: hidden;
-			padding: 3px 0px 3px 8px;
+			// padding: 3px 0px 3px 8px;
 			flex: 1;
 		}
 	}
@@ -1049,6 +1080,7 @@ body {
 	.sidebar-item-container {
 		position: relative;
 		margin-left: -10px;
+		margin-bottom: 8px;
 
 		&[item-is-hidden="1"] {
 			display: none;
@@ -1131,6 +1163,9 @@ body {
 		}
 	}
 
+	.desk-sidebar-item.standard-sidebar-item.selected .sidebar-item-label {
+    color: white;
+	}
 	// widgets
 	.widget.number-widget-box {
 		border: 1px solid var(--border-color);

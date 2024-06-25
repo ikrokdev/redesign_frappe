@@ -15,9 +15,9 @@
 				>
 					<span class="selected-view ellipsis">
 					</span>
-					<span>
+					<span class="icon-wrap">
 						<svg class="icon icon-xs">
-							<use href="#icon-select"></use>
+							<use href="#es-line-down"></use>
 						</svg>
 					</span>
 				</a>
@@ -30,13 +30,36 @@
 		</div>
 	</div>
 
-	<div class="sidebar-section filter-section">
-		<li class="sidebar-label">
-			{{ __("Filter By") }}
+	<div class="sidebar-section filter-section filter-sidebar-section">
+		<li class="sidebar-label filter-section-title">
+			<p class="sidebar-label-title ">
+				{{ __("Filter By") }}
+			</p>
+			<div class="edit-btn-wrap add-list-group-by sidebar-action">
+				<div class="add-list-group-by sidebar-action">
+					<a class="add-group-by">
+						${__("Edit")}
+					</a>
+				</div>
+			</div>
 		</li>
 
 		<div class="list-group-by">
 		</div>
+	</div>
+	
+	<div class="sidebar-section filter-section filter-sidebar-section">
+		<div class="sidebar-label filter-section-title">
+			<p class="sidebar-label-title ">
+				{{ __("Apply Tags") }}
+			</p>
+			<div class="edit-btn-wrap sidebar-action">
+				<div class="">
+					<a class="list-tag-preview">{{ __("Show Tags") }}</a>
+				</div>
+			</div>
+		</div>
+		
 
 		<div class="list-tags">
 			<li class="list-stats list-link">
@@ -48,9 +71,9 @@
 					href="#"
 				>
 					<span>{{ __("Tags") }}</span>
-					<span>
+					<span class="icon-wrap">
 						<svg class="icon icon-xs">
-							<use href="#icon-select"></use>
+							<use href="#es-line-down"></use>
 						</svg>
 					</span>
 				</a>
@@ -62,15 +85,15 @@
 					</div>
 				</ul>
 			</li>
-			<li class="sidebar-action show-tags">
-				<a class="list-tag-preview">{{ __("Show Tags") }}</a>
-			</li>
 		</div>
 	</div>
 
-	<div class="sidebar-section save-filter-section">
-		<li class="sidebar-label">
-			{{ __("Save Filter") }}
+	<div class="sidebar-section filter-section save-filter-section filter-sidebar-section">
+		<li class="sidebar-label filter-section-title">
+			<p class="sidebar-label-title">
+				{{ __("Save Filter") }}
+			</p>
+			<div class="edit-btn-wrap add-list-group-by sidebar-action"></div>
 		</li>
 		<li class="list-filters list-link"></li>
 </ul>

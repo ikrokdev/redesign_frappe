@@ -55,11 +55,7 @@ frappe.views.ListGroupBy = class ListGroupBy {
 		let html = `
 			<div class="list-group-by-fields">
 			</div>
-			<li class="add-list-group-by sidebar-action">
-				<a class="add-group-by">
-					${__("Edit Filters")}
-				</a>
-			</li>
+		
 		`;
 		this.$wrapper.html(html);
 	}
@@ -86,7 +82,8 @@ frappe.views.ListGroupBy = class ListGroupBy {
 					data-label="${label}" data-fieldname="${fieldname}" data-fieldtype="${fieldtype}"
 					href="#" onclick="return false;">
 						<span class="ellipsis">${__(label)}</span>
-						<span>${frappe.utils.icon("select", "xs")}</span>
+						<span class="icon-wrap">${frappe.utils.icon("down", "xs")}</span>
+						
 					</a>
 					<ul class="dropdown-menu group-by-dropdown" role="menu">
 					</ul>

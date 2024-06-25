@@ -8,7 +8,11 @@ body {
 	color: var(--text-muted);
 	font-weight: var(--weight-regular);
 	letter-spacing: 0.02em;
-	background-color: var(--bg-color);
+	background-color: var(--redisign-neutral-lightest-default, #F5F6FF);
+
+	.layout-main {
+		padding-bottom: 1rem;
+	}
 
 	&.full-width {
 		@include media-breakpoint-up(md) {
@@ -18,6 +22,29 @@ body {
 			}
 		}
 	}
+
+	.page-head .container,
+	.navbar .container,
+	.container.page-body {
+		// padding: 0.5rem 0.75rem;
+		padding-right: max(0.75rem, 15px);
+		padding-left: max(1rem, 24px);
+		max-width: 100% !important;
+		flex: 1 1 auto;
+	}
+
+	.container {
+
+		.page-head-content.row,
+		&.page-body .page-content .row.layout-main {
+			// margin-right: 0;
+			// margin-left: 0;
+
+		}
+
+	}
+
+
 }
 
 a {
@@ -67,6 +94,7 @@ a.text-extra-muted {
 }
 
 a.badge-hover {
+
 	&:hover .badge,
 	&:focus .badge,
 	&:active .badge {
@@ -99,36 +127,47 @@ pre {
 .col-xs-1 {
 	@extend .col-1;
 }
+
 .col-xs-2 {
 	@extend .col-2;
 }
+
 .col-xs-3 {
 	@extend .col-3;
 }
+
 .col-xs-4 {
 	@extend .col-4;
 }
+
 .col-xs-5 {
 	@extend .col-5;
 }
+
 .col-xs-6 {
 	@extend .col-6;
 }
+
 .col-xs-7 {
 	@extend .col-7;
 }
+
 .col-xs-8 {
 	@extend .col-8;
 }
+
 .col-xs-9 {
 	@extend .col-9;
 }
+
 .col-xs-10 {
 	@extend .col-10;
 }
+
 .col-xs-11 {
 	@extend .col-11;
 }
+
 .col-xs-12 {
 	@extend .col-12;
 }
@@ -219,6 +258,7 @@ h4 {
 	color: var(--text-color);
 	margin-bottom: var(--margin-md);
 }
+
 // override default gray-900 from bootstrap to support dark mode.
 h1,
 h2,
@@ -234,6 +274,7 @@ h6,
 .h6 {
 	color: var(--heading-color);
 }
+
 h1,
 h2,
 h3 {
@@ -258,6 +299,7 @@ h1 {
 		line-height: 2.5rem;
 		font-size: $font-size-4xl;
 	}
+
 	@include media-breakpoint-up(xl) {
 		line-height: 1;
 		font-size: $font-size-5xl;
@@ -271,12 +313,13 @@ h2 {
 	@include media-breakpoint-up(sm) {
 		font-size: $font-size-2xl;
 	}
+
 	@include media-breakpoint-up(md) {
 		font-size: $font-size-3xl;
 	}
 }
 
-.btn-group-sm > .btn,
+.btn-group-sm>.btn,
 .btn-sm {
 	padding: var(--padding-xs) var(--padding-sm);
 	@include get_textstyle("base", "regular");
@@ -285,6 +328,7 @@ h2 {
 .btn-group {
 	.btn {
 		box-shadow: none;
+
 		&:nth-child(2) {
 			border-left: 1px solid var(--btn-group-border-color);
 		}
@@ -355,11 +399,19 @@ select.input-xs {
 }
 
 .dropdown-menu {
-	padding: 4px;
+	// padding: 4px;
 	@include get_textstyle("base", "regular");
 	max-height: 500px;
 	overflow: auto;
-	border: 1px solid var(--subtle-accent);
+	// border: 1px solid var(--subtle-accent);
+	border-radius: 0.5rem;
+	padding: 1rem;
+	background: var(--neutral-white, #FFF);
+	box-shadow: 0px 1px 35.2px 0px rgba(65, 81, 100, 0.11);
+
+	li {
+		margin-top: .5rem;
+	}
 
 	.dropdown-divider {
 		margin: 4px 0;
@@ -372,11 +424,13 @@ select.input-xs {
 	a:not([href]):hover:active {
 		color: $component-active-color;
 	}
+
 	a {
 		transition: none;
 		cursor: pointer;
 		text-decoration: none;
 	}
+
 	a:active {
 		--icon-stroke: #{$component-active-color};
 	}
@@ -390,6 +444,7 @@ select.input-xs {
 		&.dropdown-divider {
 			display: none;
 		}
+
 		.divider,
 		.dropdown-divider {
 			display: none;
@@ -401,15 +456,16 @@ select.input-xs {
 	@include get_textstyle("base", "regular");
 	line-height: 1.6;
 
-	.custom-control-input ~ .custom-control-label {
+	.custom-control-input~.custom-control-label {
 		cursor: pointer;
+
 		&:before {
 			background: var(--gray-500);
 			border: none;
 		}
 	}
 
-	.custom-control-input:checked ~ .custom-control-label {
+	.custom-control-input:checked~.custom-control-label {
 		&:before {
 			background: $primary;
 		}
@@ -437,6 +493,7 @@ kbd {
 
 .table {
 	color: var(--text-color);
+
 	th,
 	td {
 		padding: 0.5rem;
@@ -489,7 +546,7 @@ kbd {
 		}
 
 		&:hover {
-			background-color: var(--sidebar-select-color);
+			background-color: var(--redisign-primary-hover);
 			text-decoration: none;
 		}
 
@@ -541,10 +598,12 @@ kbd {
 
 .frappe-rtl {
 	text-align: right;
+
 	.modal-actions {
 		right: auto !important;
 		left: 5px;
 	}
+
 	input,
 	textarea {
 		direction: rtl !important;
@@ -585,6 +644,7 @@ body.no-sidebar {
 
 .app-logo {
 	width: 24px;
+
 	h4 {
 		margin-top: 0;
 	}
@@ -594,7 +654,7 @@ body.no-sidebar {
 	text-decoration: underline;
 }
 
-details > summary:focus {
+details>summary:focus {
 	outline: none;
 }
 
@@ -658,6 +718,7 @@ details > summary:focus {
 
 .frappe-control.highlight {
 	--wrap-padding: calc(-1 * var(--padding-sm));
+
 	&::after {
 		content: " ";
 		border-radius: 5px;
@@ -673,6 +734,7 @@ details > summary:focus {
 .dropdown-menu.small {
 	@include get_textstyle("sm", "regular");
 	min-width: 140px;
+
 	.dropdown-item {
 		padding: var(--padding-xs);
 	}

@@ -121,7 +121,7 @@ frappe.views.Workspace = class Workspace {
 									: `<span class="indicator ${item.indicator_color}"></span>`
 							}
 						</span>
-						<span class="sidebar-item-label">${__(item.title)}<span>
+						<span class="sidebar-item-label ${item.selected ? "selected" : ""}">${__(item.title)}<span>
 					</a>
 					<div class="sidebar-item-control"></div>
 				</div>
@@ -154,6 +154,84 @@ frappe.views.Workspace = class Workspace {
 			this.sidebar.find(".selected")[0].scrollIntoView();
 
 		this.remove_sidebar_skeleton();
+		this.setup_sidebar_toggle();
+	}
+	
+	toggle_sidebar_labels() {
+		let sidebar_wrapper = this.wrapper.find(".layout-side-section");
+		let is_sidebar_visible = $(sidebar_wrapper).hasClass("sidebar-minimize");
+
+		//crop sidebar items width
+		sidebar_wrapper.find('.standard-sidebar-item').toggleClass('sidebar-item-minimized');
+		sidebar_wrapper.toggleClass('sidebar-minimize');
+
+		sidebar_wrapper.find('.sidebar-item-label').toggleClass('hidden');
+		// submenus open/close button
+		sidebar_wrapper.find('.sidebar-item-control').toggleClass('hidden');
+		
+		if(!is_sidebar_visible){
+			// nested containers in sidebar items (submenus)
+			sidebar_wrapper.find('.sidebar-child-item').removeClass('hidden');
+		} else {
+			sidebar_wrapper.find('.sidebar-child-item').addClass('hidden');
+		}
+	}
+
+	setup_sidebar_toggle() {
+    let sidebar_toggle = $(".sidebar-toggle-btn-internal");
+    let sidebar_wrapper = this.wrapper.find(".layout-side-section");
+    if (this.disable_sidebar_toggle || !sidebar_wrapper.length) {
+        sidebar_toggle.last().remove();
+    } else {
+        if (!frappe.is_mobile()) {
+            sidebar_toggle.attr("title", __("Toggle Sidebar"));
+        }
+        sidebar_toggle.attr("aria-label", __("Toggle Sidebar"));
+
+        sidebar_toggle.click(() => {
+            if (frappe.utils.is_xs() || frappe.utils.is_sm()) {
+                this.setup_overlay_sidebar();
+            } else {
+                this.toggle_sidebar_labels();
+
+            }
+            $(document.body).trigger("toggleSidebar");
+            this.update_sidebar_icon();
+        });
+    }
+	}
+
+	setup_overlay_sidebar() {
+    this.sidebar.find(".close-sidebar").remove();
+    let overlay_sidebar = this.sidebar.find(".overlay-sidebar").addClass("opened");
+    $('<div class="close-sidebar">').hide().appendTo(this.sidebar).fadeIn();
+    let scroll_container = $("html").css("overflow-y", "hidden");
+
+    this.sidebar.find(".close-sidebar").on("click", (e) => this.close_sidebar(e));
+    this.sidebar.on("click", "button:not(.dropdown-toggle)", (e) => this.close_sidebar(e));
+
+    this.close_sidebar = () => {
+        scroll_container.css("overflow-y", "");
+        this.sidebar.find("div.close-sidebar").fadeOut(() => {
+            overlay_sidebar
+                .removeClass("opened")
+                .find(".dropdown-toggle")
+                .removeClass("text-muted");
+        });
+    };
+	}
+
+	update_sidebar_icon() {
+    let sidebar_toggle = $(".sidebar-toggle-btn-internal");
+    let sidebar_toggle_icon = sidebar_toggle.find(".sidebar-toggle-icon");
+    let sidebar_wrapper = this.wrapper.find(".layout-side-section");
+    let is_sidebar_visible = $(sidebar_wrapper).hasClass("sidebar-minimize");
+    sidebar_toggle_icon.html(
+        frappe.utils.icon(
+            is_sidebar_visible ? "es-line-sidebar-collapse" : "es-line-sidebar-expand",
+            "md"
+        )
+    );
 	}
 
 	build_sidebar_section(title, root_pages) {
