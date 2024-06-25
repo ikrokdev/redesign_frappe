@@ -84,6 +84,10 @@ select.form-control {
 	margin-bottom: 24px;
 }
 
+.form-section.card-section .section-head {
+	padding: var(--padding-sm) var(--padding-md)
+}
+
 .tab-pane .card-section {
 	padding: 24px;
 

@@ -20,10 +20,12 @@
 </ul>
 {% if frm.meta.beta %}
 <div class="sidebar-menu">
-	<p><label class="indicator-pill yellow" title="{{ __("This feature is brand new and still experimental") }}">{{ __("Experimental") }}</label></p>
-	<p><a class="small text-muted" href="https://github.com/frappe/{{ frappe.boot.module_app[frappe.scrub(frm.meta.module)] }}/issues/new"
+	<p><label class="indicator-pill yellow" title="{{ __(" This feature is brand new and still experimental") }}">{{
+			__("Experimental") }}</label></p>
+	<p><a class="small text-muted"
+			href="https://github.com/frappe/{{ frappe.boot.module_app[frappe.scrub(frm.meta.module)] }}/issues/new"
 			target="_blank">
-		{{ __("Click here to post bugs and suggestions") }}</a></p>
+			{{ __("Click here to post bugs and suggestions") }}</a></p>
 
 </div>
 {% endif %}
@@ -48,7 +50,9 @@
 				<span class="ellipsis">{%= __("Assigned To") %}</span>
 			</span>
 			<button class="add-assignment-btn btn btn-link icon-btn">
-				<svg class="es-icon icon-sm"><use href="#es-line-add"></use></svg>
+				<svg class="es-icon icon-sm">
+					<use href="#es-line-add"></use>
+				</svg>
 			</button>
 		</span>
 		<div class="assignments"></div>
@@ -66,7 +70,9 @@
 				</a>
 			</span>
 			<button class="add-attachment-btn btn btn-link icon-btn">
-				<svg class="es-icon icon-sm"><use href="#es-line-add"></use></svg>
+				<svg class="es-icon icon-sm">
+					<use href="#es-line-add"></use>
+				</svg>
 			</button>
 		</span>
 	</li>
@@ -80,37 +86,47 @@
 	</a>
 </ul>
 <ul class="list-unstyled sidebar-menu form-reviews">
-		<li class="reviews">
-			<span class="form-sidebar-items">
-				<span>
-					<svg class="es-icon ml-0 icon-sm"><use href="#es-line-star"></use></svg>
-					<span class="ellipsis">{%= __("Reviews") %}</span>
-				</span>
-				<button class="add-review-btn btn btn-link icon-btn">
-					<svg class="es-icon icon-sm"><use href="#es-line-add"></use></svg>
-				</button>
+	<li class="reviews">
+		<span class="form-sidebar-items">
+			<span>
+				<svg class="es-icon ml-0 icon-sm">
+					<use href="#es-line-star"></use>
+				</svg>
+				<span class="ellipsis">{%= __("Reviews") %}</span>
 			</span>
-		</li>
+			<button class="add-review-btn btn btn-link icon-btn">
+				<svg class="es-icon icon-sm">
+					<use href="#es-line-add"></use>
+				</svg>
+			</button>
+		</span>
+	</li>
 </ul>
 <ul class="list-unstyled sidebar-menu form-tags">
-		<li>
-			<span class="form-sidebar-items">
-				<span>
-					<svg class="es-icon ml-0 icon-sm"><use href="#es-line-star"></use></svg>
-					<span class="tags-label ellipsis">{%= __("Tags") %}</span>
-				</span>
+	<li>
+		<span class="form-sidebar-items">
+			<span>
+				<svg class="es-icon ml-0 icon-sm">
+					<use href="#es-line-star"></use>
+				</svg>
+				<span class="tags-label ellipsis">{%= __("Tags") %}</span>
 			</span>
-		</li>
+		</span>
+	</li>
 </ul>
 <ul class="list-unstyled sidebar-menu form-shared">
 	<li>
 		<span class="form-sidebar-items">
 			<span class="share-label">
-				<svg class="es-icon ml-0 icon-sm"><use href="#es-line-add-people"></use></svg>
+				<svg class="es-icon ml-0 icon-sm">
+					<use href="#es-line-add-people"></use>
+				</svg>
 				<span class="ellipsis">{%= __("Share") %}</span>
 			</span>
 			<button class="share-doc-btn btn btn-link icon-btn">
-				<svg class="es-icon icon-sm"><use href="#es-line-add"></use></svg>
+				<svg class="es-icon icon-sm">
+					<use href="#es-line-add"></use>
+				</svg>
 			</button>
 		</span>
 		<div class="shares"></div>
@@ -134,7 +150,10 @@
 	</li>
 </ul>
 <ul class="list-unstyled sidebar-menu">
-	<a><li class="auto-repeat-status"><li></a>
+	<a>
+		<li class="auto-repeat-status">
+		<li>
+	</a>
 </ul>
 <ul class="list-unstyled sidebar-menu form-sidebar-stats">
 	<li class="flex">
@@ -142,7 +161,7 @@
 			<span class="form-stats-likes">
 				<span class="liked-by like-action d-flex align-items-center">
 					<svg class="es-icon icon-sm">
-						<use href="#es-solid-heart" class="like-icon"></use>
+						<use href="#es-solid-star" class="like-icon"></use>
 					</svg>
 					<span class="like-count ml-2"></span>
 				</span>
@@ -177,5 +196,5 @@
 	<li class="created-by"></li>
 </ul>
 {% if(frappe.get_form_sidebar_extension) { %}
-	{{ frappe.get_form_sidebar_extension() }}
+{{ frappe.get_form_sidebar_extension() }}
 {% } %}

@@ -43,7 +43,7 @@
 	&:active,
 	&:hover {
 		color: var(--redisign-neutral-darker-active, #4E5068);
-		background: 1px solid var(--redisign-neutral-light-default, #DBDFFF);
+		// background: 1px solid var(--redisign-neutral-light-default, #DBDFFF);
 	}
 }
 
@@ -155,6 +155,7 @@ div#driver-popover-item .driver-popover-footer button.btn-default,
 }
 
 .like-action,
+.form-sidebar-items,
 .standard-actions .btn {
 	svg {
 		rotate: 0;
