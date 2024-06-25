@@ -80,6 +80,17 @@ frappe.ui.Page = class Page {
 		frappe.require(this.required_libs, callback);
 	}
 
+	showSidebarToggleButton() {
+		const isMobile = frappe.is_mobile() || (window.innerWidth < 992);
+		const isDesk = frappe.get_route().includes("Workspaces");
+
+		if (isMobile || !isDesk) {
+			return false;
+		}
+
+		return true;
+	}
+
 	add_main_section() {
 		$(frappe.render_template("page", {})).appendTo(this.wrapper);
 		if (this.single_column) {
@@ -100,14 +111,14 @@ frappe.ui.Page = class Page {
 				<div class="row layout-main">
 					<div class="col-lg-2 layout-side-section-wrap">
 						<div class="layout-side-section"></div>
-						<button class="btn-reset sidebar-toggle-btn-internal" style="">
+						${this.showSidebarToggleButton() ? `<button class="btn-reset sidebar-toggle-btn-internal" style="">
 							<span class="sidebar-toggle-icon">
 								<svg class="es-icon icon-md">
-									<use href="#es-line-sidebar-collapse">
+									<use href="#es-line-sidebar-expand">
 									</use>
 								</svg>
 							</span>
-						</button>
+						</button>` : ''}
 					</div>
 					<div class="col layout-main-section-wrapper">
 						<div class="layout-main-section"></div>

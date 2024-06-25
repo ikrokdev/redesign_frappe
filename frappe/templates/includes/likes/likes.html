@@ -8,11 +8,11 @@
 		let like = parseInt("{{ like or 0 }}");
 		let like_count = parseInt("{{ like_count or 0 }}");
 
-		let toggle_like_icon = function(active) {
+		let toggle_like_icon = function (active) {
 			active ? $('.like-icon').addClass('liked') : $('.like-icon').removeClass('liked');
 		}
 
-		$('.like-icon').append(frappe.utils.icon('es-solid-heart', 'md'))
+		$('.like-icon').append(frappe.utils.icon('es-solid-star', 'md'))
 		toggle_like_icon(like);
 
 		$('.like-count').text(like_count);
@@ -21,7 +21,7 @@
 			update_like();
 		})
 
-		let update_like = function() {
+		let update_like = function () {
 			like = !like;
 			like ? like_count++ : like_count--;
 			toggle_like_icon(like);
