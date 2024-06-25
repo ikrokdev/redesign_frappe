@@ -28,9 +28,9 @@ body {
 }
 
 .sidebar-minimize{
-	max-width: 75px;
+	max-width: 103px;
 	transition: max-width 0.3s ease;
-	overflow: hidden;
+	// overflow: hidden;
 }
 
 .sidebar-item-minimized{
@@ -45,7 +45,7 @@ body {
 		text-transform: uppercase;
 		cursor: pointer;
 		margin-bottom: var(--margin-xs) !important;
-
+		text-wrap: nowrap;
 		span {
 			pointer-events: none;
 		}

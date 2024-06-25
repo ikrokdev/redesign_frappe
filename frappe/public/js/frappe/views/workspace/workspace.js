@@ -159,12 +159,15 @@ frappe.views.Workspace = class Workspace {
 	
 	toggle_sidebar_labels() {
 		let sidebar_wrapper = this.wrapper.find(".layout-side-section");
+		let sidebar_parent = sidebar_wrapper.parent();
 		let is_sidebar_visible = $(sidebar_wrapper).hasClass("sidebar-minimize");
+		let page_title = $('.page-title');
 
 		//crop sidebar items width
 		sidebar_wrapper.find('.standard-sidebar-item').toggleClass('sidebar-item-minimized');
-		sidebar_wrapper.toggleClass('sidebar-minimize');
-
+		sidebar_parent.toggleClass('sidebar-minimize');
+		page_title.toggleClass('sidebar-minimize');
+		
 		sidebar_wrapper.find('.sidebar-item-label').toggleClass('hidden');
 		// submenus open/close button
 		sidebar_wrapper.find('.sidebar-item-control').toggleClass('hidden');
@@ -225,7 +228,7 @@ frappe.views.Workspace = class Workspace {
     let sidebar_toggle = $(".sidebar-toggle-btn-internal");
     let sidebar_toggle_icon = sidebar_toggle.find(".sidebar-toggle-icon");
     let sidebar_wrapper = this.wrapper.find(".layout-side-section");
-    let is_sidebar_visible = $(sidebar_wrapper).hasClass("sidebar-minimize");
+    let is_sidebar_visible = $(sidebar_wrapper).parent().hasClass("sidebar-minimize");
     sidebar_toggle_icon.html(
         frappe.utils.icon(
             is_sidebar_visible ? "es-line-sidebar-collapse" : "es-line-sidebar-expand",
