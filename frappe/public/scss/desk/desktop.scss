@@ -1,6 +1,7 @@
 html,
 body {
 	background-color: var(--bg-color);
+
 	::selection {
 		color: var(--neutral-black);
 		background: var(--gray-300);
@@ -12,17 +13,18 @@ body {
 // }
 
 .desk-sidebar-item.standard-sidebar-item.selected .sidebar-item-icon svg:has(> use),
-.desk-sidebar-item.standard-sidebar-item.selected .drop-icon svg:has(> use)  {
+.desk-sidebar-item.standard-sidebar-item.selected .drop-icon svg:has(> use) {
 	stroke: white;
 }
 
-.sidebar-toggle-btn-internal{
+.sidebar-toggle-btn-internal {
 	border-radius: 50%;
 	width: 36px;
 	height: 36px;
 	box-shadow: -1px 1px 10.9px 0px rgba(54, 60, 89, 0.08);
 	z-index: 99;
-	svg{
+
+	svg {
 		display: block;
 	}
 }
@@ -33,7 +35,7 @@ body {
 	// overflow: hidden;
 }
 
-.sidebar-item-minimized{
+.sidebar-item-minimized {
 	max-width: 45px;
 }
 
@@ -129,6 +131,7 @@ body {
 
 		.grid-col-2 {
 			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
 			.full-width {
 				grid-column-start: 1;
 				grid-column-end: 2;
@@ -190,7 +193,7 @@ body {
 			@include flex(flex, null, center, row-reverse);
 
 			// Any immediate child
-			> * {
+			>* {
 				align-self: center;
 				margin-left: 5px;
 				box-shadow: none;
@@ -335,6 +338,7 @@ body {
 
 				.chart-container {
 					height: 100%;
+
 					.frappe-chart {
 						height: 100%;
 					}
@@ -386,6 +390,7 @@ body {
 			background-color: var(--bg-color);
 
 			.onboarding-step {
+
 				&.active,
 				&:hover,
 				&.complete {
@@ -455,6 +460,7 @@ body {
 						@include get_textstyle("base", "regular");
 					}
 				}
+
 				.onboarding-step-footer {
 					margin-top: var(--margin-md);
 				}
@@ -493,6 +499,7 @@ body {
 				&:hover {
 					background-color: var(--subtle-fg);
 				}
+
 				&.active .step-skip {
 					visibility: visible;
 				}
@@ -532,9 +539,11 @@ body {
 				&.skipped {
 					color: var(--text-light);
 					background-color: var(--bg-color);
+
 					.step-index.step-skipped {
 						display: flex;
 					}
+
 					.step-text {
 						text-decoration: line-through;
 					}
@@ -567,9 +576,11 @@ body {
 		@media (max-width: map-get($grid-breakpoints, "md")) {
 			.widget-body {
 				flex-direction: column;
+
 				.onboarding-steps-wrapper {
 					min-width: none;
 				}
+
 				.onboarding-step-preview {
 					padding-left: 0;
 					padding-top: var(--padding-lg);
@@ -585,6 +596,7 @@ body {
 
 		&:hover {
 			--icon-stroke: var(--invert-neutral);
+
 			.widget-title {
 				color: var(--invert-neutral) !important;
 			}
@@ -630,6 +642,7 @@ body {
 
 			.link-content {
 				flex: 1;
+
 				&:hover {
 					color: var(--invert-neutral);
 				}
@@ -644,7 +657,7 @@ body {
 				top: -60px;
 				max-width: 220px;
 
-				&.top > .arrow {
+				&.top>.arrow {
 					left: 20%;
 				}
 			}
@@ -753,6 +766,7 @@ body {
 	}
 
 	&.quick-list-widget-box {
+
 		.list-loading-state,
 		.list-no-data-state {
 			display: flex;
@@ -927,18 +941,22 @@ body {
 
 .workspace-skeleton {
 	transition: ease;
+
 	.widget-group-title {
 		height: 15px;
 		width: 200px;
 	}
+
 	.skeleton-card {
 		background-color: var(--skeleton-bg);
 		box-shadow: none;
 		border-radius: var(--border-radius-lg);
 	}
+
 	.shortcut-widget-box {
 		height: 60px;
 	}
+
 	.links-widget-box {
 		height: 200px;
 	}
@@ -946,6 +964,7 @@ body {
 
 .workspace-sidebar-skeleton {
 	transition: ease;
+
 	.sidebar-box {
 		height: 40px;
 		margin-bottom: 10px;
@@ -967,6 +986,7 @@ body {
 	@media (min-width: map-get($grid-breakpoints, "lg")) {
 		.layout-main {
 			height: calc(100vh - var(--navbar-height) - var(--page-head-height) - 5px);
+
 			.layout-side-section,
 			.layout-main-section-wrapper {
 				height: 100%;
@@ -983,6 +1003,7 @@ body {
 
 				&::-webkit-scrollbar-thumb {
 					background: var(--gray-200);
+
 					[data-theme="dark"] & {
 						background: var(--gray-800);
 					}
@@ -1000,6 +1021,7 @@ body {
 
 				&.edit-mode {
 					background-color: var(--subtle-fg) !important;
+
 					.links-widget-box {
 						background-color: var(--bg-color) !important;
 					}
@@ -1015,6 +1037,7 @@ body {
 	.layout-main-section-wrapper {
 		margin-top: -5px;
 		padding-top: 5px;
+		padding-right: 15px;
 	}
 
 	.layout-main-section {
@@ -1035,7 +1058,7 @@ body {
 		padding: 10px 12px 10px 12px;
 
 		.sidebar-item-control {
-			> * {
+			>* {
 				align-self: center;
 				margin-left: 3px;
 				box-shadow: none;
@@ -1117,6 +1140,7 @@ body {
 					&[item-is-hidden="1"] {
 						display: block;
 					}
+
 					&[item-is-hidden="0"] {
 						.drop-icon {
 							display: inline-block;
@@ -1136,6 +1160,7 @@ body {
 
 		.standard-sidebar-section.show-control {
 			.desk-sidebar-item.standard-sidebar-item {
+
 				&:hover,
 				&.selected {
 					.drag-handle {
@@ -1164,8 +1189,9 @@ body {
 	}
 
 	.desk-sidebar-item.standard-sidebar-item.selected .sidebar-item-label {
-    color: white;
+		color: white;
 	}
+
 	// widgets
 	.widget.number-widget-box {
 		border: 1px solid var(--border-color);
@@ -1213,8 +1239,9 @@ body {
 				}
 
 				.edit-mode {
-					.widget-control > *,
-					.paragraph-control > * {
+
+					.widget-control>*,
+					.paragraph-control>* {
 						width: 0px;
 						visibility: hidden;
 						opacity: 0;
@@ -1229,13 +1256,15 @@ body {
 				}
 
 				&:hover {
-					.widget-control > *,
+
+					.widget-control>*,
 					.new-block-button {
 						width: auto;
 						visibility: visible;
 						opacity: 1;
 					}
-					.widget-control > svg {
+
+					.widget-control>svg {
 						width: 12px;
 					}
 				}
@@ -1244,7 +1273,7 @@ body {
 					.widget {
 						box-shadow: var(--shadow-base) !important;
 
-						.widget-control > * {
+						.widget-control>* {
 							width: auto;
 							visibility: visible;
 							opacity: 1;
@@ -1259,6 +1288,7 @@ body {
 							background-color: var(--fg-color);
 
 							.onboarding-step {
+
 								&.active,
 								&:hover {
 									background-color: var(--bg-color);
@@ -1287,11 +1317,11 @@ body {
 					height: 100%;
 					padding: 7px;
 
-					& > div {
+					&>div {
 						height: 100%;
 					}
 
-					.tune-btn > * {
+					.tune-btn>* {
 						pointer-events: none;
 					}
 
@@ -1359,7 +1389,7 @@ body {
 								border: 1px dashed var(--gray-400);
 								cursor: pointer;
 
-								.widget-control > * {
+								.widget-control>* {
 									width: auto;
 								}
 
@@ -1469,6 +1499,7 @@ body {
 					pointer-events: none;
 					opacity: 0.5;
 				}
+
 				.cdx-settings-sidebar {
 					position: absolute;
 					right: 100%;
@@ -1503,6 +1534,7 @@ body {
 				max-width: 930px;
 			}
 		}
+
 		@media (max-width: 995px) {
 			.ce-toolbar__content {
 				max-width: 760px;
