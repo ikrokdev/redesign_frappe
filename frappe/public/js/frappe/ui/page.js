@@ -81,7 +81,7 @@ frappe.ui.Page = class Page {
 	}
 
 	showSidebarToggleButton() {
-		const isMobile = frappe.is_mobile();
+		const isMobile = frappe.is_mobile() || (window.innerWidth < 992);
 		const isDesk = frappe.get_route().includes("Workspaces");
 
 		if (isMobile || !isDesk) {
@@ -114,7 +114,7 @@ frappe.ui.Page = class Page {
 						${this.showSidebarToggleButton() ? `<button class="btn-reset sidebar-toggle-btn-internal" style="">
 							<span class="sidebar-toggle-icon">
 								<svg class="es-icon icon-md">
-									<use href="#es-line-sidebar-collapse">
+									<use href="#es-line-sidebar-expand">
 									</use>
 								</svg>
 							</span>
