@@ -409,15 +409,15 @@ class FormTimeline extends BaseTimeline {
 			const filename = attachment_log.content;
 			const timeline_content = is_file_upload
 				? get_user_message(
-						attachment_log.owner,
-						__("You attached {0}", [filename], "Form timeline"),
-						__("{0} attached {1}", [user_link, filename], "Form timeline")
-				  )
+					attachment_log.owner,
+					__("You attached {0}", [filename], "Form timeline"),
+					__("{0} attached {1}", [user_link, filename], "Form timeline")
+				)
 				: get_user_message(
-						attachment_log.owner,
-						__("You removed attachment {0}", [filename], "Form timeline"),
-						__("{0} removed attachment {1}", [user_link, filename], "Form timeline")
-				  );
+					attachment_log.owner,
+					__("You removed attachment {0}", [filename], "Form timeline"),
+					__("{0} removed attachment {1}", [user_link, filename], "Form timeline")
+				);
 
 			attachment_timeline_contents.push({
 				icon: is_file_upload ? "es-line-attachment" : "es-line-delete",
@@ -464,7 +464,7 @@ class FormTimeline extends BaseTimeline {
 			);
 
 			like_timeline_contents.push({
-				icon: "es-line-like",
+				icon: "es-solid-star",
 				icon_size: "sm",
 				creation: like_log.creation,
 				content: timeline_content,
