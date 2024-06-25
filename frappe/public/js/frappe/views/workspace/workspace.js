@@ -160,7 +160,7 @@ frappe.views.Workspace = class Workspace {
 	toggle_sidebar_labels() {
 		let sidebar_wrapper = this.wrapper.find(".layout-side-section");
 		let sidebar_parent = sidebar_wrapper.parent();
-		let is_sidebar_visible = $(sidebar_wrapper).hasClass("sidebar-minimize");
+		let is_sidebar_visible = $(sidebar_parent).hasClass("sidebar-minimize");
 		let page_title = $('.page-title');
 
 		//crop sidebar items width
