@@ -441,6 +441,7 @@ export default class QuickListWidget extends Widget {
 				this.quick_list.forEach(($quick_list_item) =>
 					$quick_list_item.appendTo(this.quick_list_table)
 				);
+				this.quick_list_table = this.quick_list_table.filter((i, el)=> i != 0);
 				this.quick_list_table.appendTo(this.body);
 			});
 		});
