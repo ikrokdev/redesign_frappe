@@ -3,7 +3,7 @@
 
 frappe.breadcrumbs = {
 	all: {},
-
+	current_page_breadcrumb: {},
 	preferred: {
 		File: "",
 		Dashboard: "Customization",
@@ -29,6 +29,10 @@ frappe.breadcrumbs = {
 		return localStorage["preferred_breadcrumbs:" + doctype];
 	},
 
+	get_pages() {
+		return frappe.xcall("frappe.desk.desktop.get_workspace_sidebar_items");
+	},
+	
 	add(module, doctype, type) {
 		let obj;
 		if (typeof module === "object") {
@@ -50,31 +54,32 @@ frappe.breadcrumbs = {
 
 	update() {
 		var breadcrumbs = this.all[frappe.breadcrumbs.current_page()];
-
-		this.clear();
-		if (!breadcrumbs) return this.toggle(false);
-
-		if (breadcrumbs.type === "Custom") {
-			this.set_custom_breadcrumbs(breadcrumbs);
-		} else {
-			// workspace
-			this.set_workspace_breadcrumb(breadcrumbs);
-
-			// form / print
-			let view = frappe.get_route()[0];
-			view = view ? view.toLowerCase() : null;
-			if (breadcrumbs.doctype && ["print", "form"].includes(view)) {
-				this.set_list_breadcrumb(breadcrumbs);
-				this.set_form_breadcrumb(breadcrumbs, view);
-			} else if (breadcrumbs.doctype && view === "list") {
-				this.set_list_breadcrumb(breadcrumbs);
-			} else if (breadcrumbs.doctype && view == "dashboard-view") {
-				this.set_list_breadcrumb(breadcrumbs);
-				this.set_dashboard_breadcrumb(breadcrumbs);
+		this.get_pages().then((pages) => {
+			this.clear();
+			frappe.breadcrumbs.current_page_breadcrumb = pages.pages.find((el) => el.name === breadcrumbs?.module);
+			if (!breadcrumbs) return this.toggle(false);
+	
+			if (breadcrumbs.type === "Custom") {
+				this.set_custom_breadcrumbs(breadcrumbs);
+			} else {
+				// workspace
+				this.set_workspace_breadcrumb(breadcrumbs);
+				// form / print
+				let view = frappe.get_route()[0];
+				view = view ? view.toLowerCase() : null;
+				if (breadcrumbs.doctype && ["print", "form"].includes(view)) {
+					this.set_list_breadcrumb(breadcrumbs);
+					this.set_form_breadcrumb(breadcrumbs, view);
+				} else if (breadcrumbs.doctype && view === "list") {
+					this.set_list_breadcrumb(breadcrumbs);
+				} else if (breadcrumbs.doctype && view == "dashboard-view") {
+					this.set_list_breadcrumb(breadcrumbs);
+					this.set_dashboard_breadcrumb(breadcrumbs);
+				}
 			}
-		}
-
-		this.toggle(true);
+	
+			this.toggle(true);
+		})
 	},
 
 	set_custom_breadcrumbs(breadcrumbs) {
@@ -84,8 +89,22 @@ frappe.breadcrumbs = {
 	append_breadcrumb_element(route, label) {
 		const el = document.createElement("li");
 		const a = document.createElement("a");
+		const curr_page_breadcrumb = frappe.breadcrumbs.current_page_breadcrumb;
+		const icon_name = curr_page_breadcrumb.icon;
+		const icon = document.createElement("span");
+		icon.classList.add('sidebar-item-icon');
+		icon.setAttribute("item-icon", icon_name || "folder-normal")
+		icon.innerHTML =
+`${
+	curr_page_breadcrumb.public
+		? frappe.utils.icon(icon_name || "folder-normal", "md")
+		: null
+}`;
 		a.href = route;
 		a.innerText = label;
+		if(label == curr_page_breadcrumb.label){
+			el.appendChild(icon);
+		}
 		el.appendChild(a);
 		this.$breadcrumbs.append(el);
 	},
