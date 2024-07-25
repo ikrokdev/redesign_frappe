@@ -42,7 +42,8 @@ frappe.ui.Page = class Page {
 		this.wrapper = $(this.parent);
 		this.add_main_section();
 		this.setup_scroll_handler();
-		this.setup_sidebar_toggle();
+		this.setup_sidebar_toggle(".layout-side-section", $(".page-head"), this.sidebar);
+		this.setup_sidebar_toggle(".layout-page-side-section", $(".page-side-head", this.page_sidebar));
 	}
 
 	setup_scroll_handler() {
@@ -121,7 +122,34 @@ frappe.ui.Page = class Page {
 						</button>` : ''}
 					</div>
 					<div class="col layout-main-section-wrapper">
-						<div class="layout-main-section"></div>
+						<div class="d-flex flex-column layout-page-container">
+							<div class="layout-page-side-head">
+								<div class="page-title">
+									<div class="flex fill-width title-area">
+										<div>
+											<div class="flex">
+												<h3 class="ellipsis title-text"></h3>
+												<span class="indicator-pill whitespace-nowrap"></span>
+											</div>
+											<div class="ellipsis sub-heading hide text-muted"></div>
+										</div>
+										<button class="btn btn-default more-button hide">
+											<svg class="icon icon-sm">
+												<use href="#icon-dot-horizontal">
+												</use>
+											</svg>
+										</button>
+									</div>				
+								</div>			
+							</div>
+							<div class="d-flex flex-row">
+								<div class="col-lg-2 layout-page-side-section-wrap d-flex">
+									<div class="layout-page-side-section"></div>
+									<div class="vertical-sep"></div>
+								</div>
+								<div class="layout-main-section"></div>
+							</div>
+						</div>
 						<div class="layout-footer hide"></div>
 					</div>
 				</div>
@@ -144,6 +172,7 @@ frappe.ui.Page = class Page {
 		this.body = this.main = this.wrapper.find(".layout-main-section");
 		this.container = this.wrapper.find(".page-body");
 		this.sidebar = this.wrapper.find(".layout-side-section");
+		this.page_sidebar = this.wrapper.find(".layout-page-side-section");
 		this.footer = this.wrapper.find(".layout-footer");
 		this.indicator = this.wrapper.find(".indicator-pill");
 
@@ -184,9 +213,9 @@ frappe.ui.Page = class Page {
 			.add(action_btn, action_btn.find(".actions-btn-group-label"));
 	}
 
-	setup_sidebar_toggle() {
-		let sidebar_toggle = $(".page-head").find(".sidebar-toggle-btn");
-		let sidebar_wrapper = this.wrapper.find(".layout-side-section");
+	setup_sidebar_toggle(sidebar_wrapper_selector, toggle_btn_wrapper, sidebar) {
+		let sidebar_toggle = toggle_btn_wrapper.find(".sidebar-toggle-btn");
+		let sidebar_wrapper = this.wrapper.find(sidebar_wrapper_selector);
 		if (this.disable_sidebar_toggle || !sidebar_wrapper.length) {
 			sidebar_toggle.remove();
 		} else {
@@ -196,28 +225,28 @@ frappe.ui.Page = class Page {
 			});
 			sidebar_toggle.click(() => {
 				if (frappe.utils.is_xs() || frappe.utils.is_sm()) {
-					this.setup_overlay_sidebar();
+					this.setup_overlay_sidebar(sidebar);
 				} else {
 					sidebar_wrapper.toggle();
 				}
 				$(document.body).trigger("toggleSidebar");
-				this.update_sidebar_icon();
+				this.update_sidebar_icon(toggle_btn_wrapper);
 			});
 		}
 	}
 
-	setup_overlay_sidebar() {
-		this.sidebar.find(".close-sidebar").remove();
-		let overlay_sidebar = this.sidebar.find(".overlay-sidebar").addClass("opened");
-		$('<div class="close-sidebar">').hide().appendTo(this.sidebar).fadeIn();
+	setup_overlay_sidebar(sidebar) {
+		sidebar.find(".close-sidebar").remove();
+		let overlay_sidebar = sidebar.find(".overlay-sidebar").addClass("opened");
+		$('<div class="close-sidebar">').hide().appendTo(sidebar).fadeIn();
 		let scroll_container = $("html").css("overflow-y", "hidden");
 
-		this.sidebar.find(".close-sidebar").on("click", (e) => this.close_sidebar(e));
-		this.sidebar.on("click", "button:not(.dropdown-toggle)", (e) => this.close_sidebar(e));
+		sidebar.find(".close-sidebar").on("click", (e) => this.close_sidebar(e));
+		sidebar.on("click", "button:not(.dropdown-toggle)", (e) => this.close_sidebar(e));
 
 		this.close_sidebar = () => {
 			scroll_container.css("overflow-y", "");
-			this.sidebar.find("div.close-sidebar").fadeOut(() => {
+			sidebar.find("div.close-sidebar").fadeOut(() => {
 				overlay_sidebar
 					.removeClass("opened")
 					.find(".dropdown-toggle")
@@ -226,8 +255,8 @@ frappe.ui.Page = class Page {
 		};
 	}
 
-	update_sidebar_icon() {
-		let sidebar_toggle = $(".page-head").find(".sidebar-toggle-btn");
+	update_sidebar_icon(jq_wrapper) {
+		let sidebar_toggle = jq_wrapper.find(".sidebar-toggle-btn");
 		let sidebar_toggle_icon = sidebar_toggle.find(".sidebar-toggle-icon");
 		let sidebar_wrapper = this.wrapper.find(".layout-side-section");
 		let is_sidebar_visible = $(sidebar_wrapper).is(":visible");

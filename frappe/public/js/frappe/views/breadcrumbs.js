@@ -55,8 +55,12 @@ frappe.breadcrumbs = {
 	update() {
 		var breadcrumbs = this.all[frappe.breadcrumbs.current_page()];
 		this.get_pages().then((pages) => {
+				frappe.breadcrumbs.current_page_breadcrumb = pages.pages.find((el) => el.name === breadcrumbs?.module);
+				// this.set_workspace_breadcrumb(breadcrumbs);
+			})
+
 			this.clear();
-			frappe.breadcrumbs.current_page_breadcrumb = pages.pages.find((el) => el.name === breadcrumbs?.module);
+
 			if (!breadcrumbs) return this.toggle(false);
 	
 			if (breadcrumbs.type === "Custom") {
@@ -79,7 +83,6 @@ frappe.breadcrumbs = {
 			}
 	
 			this.toggle(true);
-		})
 	},
 
 	set_custom_breadcrumbs(breadcrumbs) {
@@ -89,22 +92,31 @@ frappe.breadcrumbs = {
 	append_breadcrumb_element(route, label) {
 		const el = document.createElement("li");
 		const a = document.createElement("a");
-		const curr_page_breadcrumb = frappe.breadcrumbs.current_page_breadcrumb;
-		const icon_name = curr_page_breadcrumb.icon;
+
 		const icon = document.createElement("span");
 		icon.classList.add('sidebar-item-icon');
-		icon.setAttribute("item-icon", icon_name || "folder-normal")
-		icon.innerHTML =
-`${
-	curr_page_breadcrumb.public
-		? frappe.utils.icon(icon_name || "folder-normal", "md")
-		: null
-}`;
+		
+
+		// this.get_pages().then((pages) => {
+		// 	frappe.breadcrumbs.current_page_breadcrumb = pages.pages.find((el) => el.name === breadcrumbs?.module);
+		// 	const curr_page_breadcrumb = frappe.breadcrumbs.current_page_breadcrumb;
+		// 	const icon_name = curr_page_breadcrumb?.icon;
+			
+		// 	icon.innerHTML =
+		// 		`${
+		// 			curr_page_breadcrumb.public
+		// 				? frappe.utils.icon(icon_name || "folder-normal", "md")
+		// 				: null
+		// 		}`;
+
+		// 	icon.setAttribute("item-icon", icon_name || "folder-normal")
+
+		// 	if(label == curr_page_breadcrumb.label){
+		// 		document.querySelector("span.sidebar-item-icon").append(icon);
+		// 	}
+		// })
 		a.href = route;
 		a.innerText = label;
-		if(label == curr_page_breadcrumb.label){
-			el.appendChild(icon);
-		}
 		el.appendChild(a);
 		this.$breadcrumbs.append(el);
 	},

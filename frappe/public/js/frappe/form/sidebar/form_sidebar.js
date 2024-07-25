@@ -21,7 +21,7 @@ frappe.ui.form.Sidebar = class {
 
 		this.sidebar = $('<div class="form-sidebar overlay-sidebar hidden-xs hidden-sm"></div>')
 			.html(sidebar_content)
-			.appendTo(this.page.sidebar.empty());
+			.appendTo(this.page.page_sidebar.empty());
 
 		this.comments = this.sidebar.find(".form-sidebar-stats .comments");
 		this.user_actions = this.sidebar.find(".user-actions");
@@ -68,9 +68,9 @@ frappe.ui.form.Sidebar = class {
 	refresh() {
 		if (this.frm.doc.__islocal) {
 			this.sidebar.toggle(false);
-			this.page.sidebar.addClass("hide-sidebar");
+			this.page.page_sidebar.addClass("hide-sidebar");
 		} else {
-			this.page.sidebar.removeClass("hide-sidebar");
+			this.page.page_sidebar.removeClass("hide-sidebar");
 			this.sidebar.toggle(true);
 			this.frm.assign_to.refresh();
 			this.frm.attachments.refresh();

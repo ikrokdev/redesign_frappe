@@ -16,6 +16,9 @@
 		vertical-align: inherit;
 	}
 	li{
+		&:first-of-type{
+			align-content: end;
+		}
 		&:not(:first-of-type):before {
 			content: #{"/*!rtl:var(--left-arrow-svg);*/"}var(--right-arrow-svg);
 			display: inline-block;
