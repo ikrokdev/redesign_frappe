@@ -21,10 +21,9 @@ class Workspace(Document):
 
 	if TYPE_CHECKING:
 		from frappe.core.doctype.has_role.has_role import HasRole
+		from frappe.desk.doctype.quick_list_multiples.quick_list_multiples import QuickListMultiples
 		from frappe.desk.doctype.workspace_chart.workspace_chart import WorkspaceChart
-		from frappe.desk.doctype.workspace_custom_block.workspace_custom_block import (
-			WorkspaceCustomBlock,
-		)
+		from frappe.desk.doctype.workspace_custom_block.workspace_custom_block import WorkspaceCustomBlock
 		from frappe.desk.doctype.workspace_link.workspace_link import WorkspaceLink
 		from frappe.desk.doctype.workspace_number_card.workspace_number_card import WorkspaceNumberCard
 		from frappe.desk.doctype.workspace_quick_list.workspace_quick_list import WorkspaceQuickList
@@ -36,20 +35,7 @@ class Workspace(Document):
 		custom_blocks: DF.Table[WorkspaceCustomBlock]
 		for_user: DF.Data | None
 		hide_custom: DF.Check
-		indicator_color: DF.Literal[
-			"green",
-			"cyan",
-			"blue",
-			"orange",
-			"yellow",
-			"gray",
-			"grey",
-			"red",
-			"pink",
-			"darkgrey",
-			"purple",
-			"light-blue",
-		]
+		indicator_color: DF.Literal["green", "cyan", "blue", "orange", "yellow", "gray", "grey", "red", "pink", "darkgrey", "purple", "light-blue"]
 		is_hidden: DF.Check
 		label: DF.Data
 		links: DF.Table[WorkspaceLink]
@@ -57,6 +43,7 @@ class Workspace(Document):
 		number_cards: DF.Table[WorkspaceNumberCard]
 		parent_page: DF.Data | None
 		public: DF.Check
+		quick_list_multiples: DF.Table[QuickListMultiples]
 		quick_lists: DF.Table[WorkspaceQuickList]
 		restrict_to_domain: DF.Link | None
 		roles: DF.Table[HasRole]

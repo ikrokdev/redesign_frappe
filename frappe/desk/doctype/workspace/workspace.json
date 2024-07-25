@@ -35,7 +35,9 @@
   "custom_blocks_tab",
   "custom_blocks",
   "roles_tab",
-  "roles"
+  "roles",
+  "quick_list_multiples_tab",
+  "quick_list_multiples"
  ],
  "fields": [
   {
@@ -215,11 +217,23 @@
    "fieldtype": "Select",
    "label": "Indicator Color",
    "options": "green\ncyan\nblue\norange\nyellow\ngray\ngrey\nred\npink\ndarkgrey\npurple\nlight-blue"
+  },
+  {
+   "fieldname": "quick_list_multiples",
+   "fieldtype": "Table",
+   "label": "Quick List Multiples",
+   "options": "Quick List Multiples"
+  },
+  {
+   "fieldname": "quick_list_multiples_tab",
+   "fieldtype": "Tab Break",
+   "label": "Quick List Multiples",
+   "options": "Quick List Multiple"
   }
  ],
  "in_create": 1,
  "links": [],
- "modified": "2023-08-25 15:04:03.419848",
+ "modified": "2024-07-25 12:05:29.961234",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Workspace",

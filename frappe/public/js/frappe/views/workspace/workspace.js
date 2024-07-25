@@ -1488,6 +1488,12 @@ frappe.views.Workspace = class Workspace {
 					page_data: this.page_data || [],
 				},
 			},
+			quick_list_multiple: {
+				class: this.blocks["quick_list_multiple"],
+				config: {
+					page_data: this.page_data || [],
+				},
+			},
 			number_card: {
 				class: this.blocks["number_card"],
 				config: {

@@ -752,7 +752,8 @@ body {
 		}
 	}
 
-	&.quick-list-widget-box {
+	&.quick-list-widget-box,
+	&.quick-list-multiple-widget-box{
 		.list-loading-state,
 		.list-no-data-state {
 			display: flex;
@@ -799,7 +800,8 @@ body {
 			margin: 6px 0px;
 			min-height: 202px;
 
-			.quick-list-item {
+			.quick-list-item,
+			.quick-list-multiple-item {
 				// display: flex;
 				// justify-content: space-between;
 				// align-items: center;
@@ -1223,6 +1225,7 @@ body {
 
 					.link-item,
 					.quick-list-item,
+					.quick-list-multiple-item,
 					.see-all {
 						pointer-events: none;
 					}

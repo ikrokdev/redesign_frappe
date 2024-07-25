@@ -1,0 +1,59 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-25 12:00:29.015766",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "document_type",
+  "column_break_fpax",
+  "label",
+  "section_break_dhrm",
+  "quick_list_multiple_filter"
+ ],
+ "fields": [
+  {
+   "fieldname": "document_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "DocType",
+   "options": "DocType",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_fpax",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Label",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_dhrm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "quick_list_multiple_filter",
+   "fieldtype": "Code",
+   "in_list_view": 1,
+   "label": "Quick List Multiple Filter",
+   "options": "JSON"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-07-25 12:04:07.291038",
+ "modified_by": "Administrator",
+ "module": "Desk",
+ "name": "Quick List Multiples",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
