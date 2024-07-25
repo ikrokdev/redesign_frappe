@@ -247,9 +247,13 @@
 		margin-right: var(--margin-sm);
 	}
 }
-
+.red{
+	background-color: red !important;
+}
 .layout-main-section {
 	margin-right: 24px;
+	margin-left: var(--margin-lg);
+	width: -webkit-fill-available;
 	.frappe-list,
 	.report-wrapper {
 		padding: 0 var(--padding-xs);
@@ -291,8 +295,4 @@
 .page-only-label {
 	margin-top: var(--margin-xs);
 	text-align: center;
-}
-
-.vertical-sep{
-	width: 24px;
 }

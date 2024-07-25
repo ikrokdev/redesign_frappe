@@ -22,7 +22,8 @@ frappe.ui.form.Sidebar = class {
 		this.sidebar = $('<div class="form-sidebar overlay-sidebar hidden-xs hidden-sm"></div>')
 			.html(sidebar_content)
 			.appendTo(this.page.page_sidebar.empty());
-
+		this.page.page_sidebar[0].parentElement.classList.remove("d-none");
+		this.page.page_sidebar[0].parentElement.classList.add("d-flex");
 		this.comments = this.sidebar.find(".form-sidebar-stats .comments");
 		this.user_actions = this.sidebar.find(".user-actions");
 		this.image_section = this.sidebar.find(".sidebar-image-section");

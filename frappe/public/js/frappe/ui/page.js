@@ -143,9 +143,8 @@ frappe.ui.Page = class Page {
 								</div>			
 							</div>
 							<div class="d-flex flex-row">
-								<div class="col-lg-2 layout-page-side-section-wrap d-flex">
+								<div class="col-lg-2 layout-page-side-section-wrap d-none">
 									<div class="layout-page-side-section"></div>
-									<div class="vertical-sep"></div>
 								</div>
 								<div class="layout-main-section"></div>
 							</div>
