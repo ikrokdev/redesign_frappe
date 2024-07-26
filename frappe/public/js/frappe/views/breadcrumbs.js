@@ -28,10 +28,6 @@ frappe.breadcrumbs = {
 	get_doctype_module(doctype) {
 		return localStorage["preferred_breadcrumbs:" + doctype];
 	},
-
-	get_pages() {
-		return frappe.xcall("frappe.desk.desktop.get_workspace_sidebar_items");
-	},
 	
 	add(module, doctype, type) {
 		let obj;
@@ -54,10 +50,10 @@ frappe.breadcrumbs = {
 
 	update() {
 		var breadcrumbs = this.all[frappe.breadcrumbs.current_page()];
-		this.get_pages().then((pages) => {
-				frappe.breadcrumbs.current_page_breadcrumb = pages.pages.find((el) => el.name === breadcrumbs?.module);
-				// this.set_workspace_breadcrumb(breadcrumbs);
-			})
+			const workspace = Object.keys(frappe.workspaces)
+				.find((workspace) => workspace == breadcrumbs?.module?.toLowerCase())
+			frappe.breadcrumbs.current_page_breadcrumb = frappe.workspaces[workspace]
+
 
 			this.clear();
 
@@ -92,29 +88,30 @@ frappe.breadcrumbs = {
 	append_breadcrumb_element(route, label) {
 		const el = document.createElement("li");
 		const a = document.createElement("a");
-
-		const icon = document.createElement("span");
-		icon.classList.add('sidebar-item-icon');
 		
+		// Get workspace icon-name if exists
+		const curr_page_breadcrumb = frappe.breadcrumbs.current_page_breadcrumb;
+		const icon_name = curr_page_breadcrumb?.icon;
 
-		// this.get_pages().then((pages) => {
-		// 	frappe.breadcrumbs.current_page_breadcrumb = pages.pages.find((el) => el.name === breadcrumbs?.module);
-		// 	const curr_page_breadcrumb = frappe.breadcrumbs.current_page_breadcrumb;
-		// 	const icon_name = curr_page_breadcrumb?.icon;
+		// Create icon and append it to breadcrumbs
+		if(label == curr_page_breadcrumb.label && icon_name){
+			const icon = document.createElement("span");
+			icon.classList.add('sidebar-item-icon');
 			
-		// 	icon.innerHTML =
-		// 		`${
-		// 			curr_page_breadcrumb.public
-		// 				? frappe.utils.icon(icon_name || "folder-normal", "md")
-		// 				: null
-		// 		}`;
+			
+			
+			icon.innerHTML =
+				`${
+					curr_page_breadcrumb.public
+						? frappe.utils.icon(icon_name || "folder-normal", "md")
+						: null
+				}`;
 
-		// 	icon.setAttribute("item-icon", icon_name || "folder-normal")
-
-		// 	if(label == curr_page_breadcrumb.label){
-		// 		document.querySelector("span.sidebar-item-icon").append(icon);
-		// 	}
-		// })
+			icon.setAttribute("item-icon", icon_name || "folder-normal")
+			
+			el.append(icon);
+		}
+		
 		a.href = route;
 		a.innerText = label;
 		el.appendChild(a);
