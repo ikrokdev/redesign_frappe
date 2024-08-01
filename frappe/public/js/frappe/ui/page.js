@@ -33,6 +33,7 @@ frappe.ui.Page = class Page {
 		this.buttons = {};
 		this.fields_dict = {};
 		this.views = {};
+		this.isVisibleSidebarToggleButton = true;
 
 		this.make();
 		frappe.ui.pages[frappe.get_route_str()] = this;
@@ -44,6 +45,8 @@ frappe.ui.Page = class Page {
 		this.setup_scroll_handler();
 		this.setup_sidebar_toggle(".layout-side-section", $(".page-head"), this.sidebar);
 		this.setup_sidebar_toggle(".layout-page-side-section", $(".page-side-head", this.page_sidebar));
+		$(window).on("resize", () => this.showSidebarToggleButton())
+
 	}
 
 	setup_scroll_handler() {
@@ -112,7 +115,7 @@ frappe.ui.Page = class Page {
 				<div class="row layout-main">
 					<div class="col-lg-2 layout-side-section-wrap">
 						<div class="layout-side-section"></div>
-						${this.showSidebarToggleButton() ? `<button class="btn-reset sidebar-toggle-btn-internal" style="">
+						${this.isVisibleSidebarToggleButton ? `<button class="btn-reset sidebar-toggle-btn-internal" style="">
 							<span class="sidebar-toggle-icon">
 								<svg class="es-icon icon-md">
 									<use href="#es-line-sidebar-expand">
