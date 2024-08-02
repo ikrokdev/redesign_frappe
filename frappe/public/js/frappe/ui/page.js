@@ -25,7 +25,7 @@ frappe.ui.make_app_page = function (opts) {
 
 frappe.ui.pages = {};
 
-frappe.ui.Page = class Page {
+frappe.ui.Page = class Page{
 	constructor(opts) {
 		$.extend(this, opts);
 
@@ -33,16 +33,324 @@ frappe.ui.Page = class Page {
 		this.buttons = {};
 		this.fields_dict = {};
 		this.views = {};
+		// this.isVisibleSidebarToggleButton = true;
+		this.pages = {};
+		this.sorted_public_items = [];
+		this.sorted_private_items = [];
+		this.sidebar_items = {
+			public: {},
+			private: {},
+		};    
+		this.sidebar_categories = ["My Workspaces", "Public"];
+		this.indicator_colors = [
+			"green",
+			"cyan",
+			"blue",
+			"orange",
+			"yellow",
+			"gray",
+			"grey",
+			"red",
+			"pink",
+			"darkgrey",
+			"purple",
+			"light-blue",
+		];
 
 		this.make();
+		this.prepare_sidebar_wrap();
+		this.setup_pages();
 		frappe.ui.pages[frappe.get_route_str()] = this;
 	}
+
+	prepare_sidebar_wrap() {
+		let list_sidebar = $(`
+			<div class="list-sidebar overlay-sidebar hidden-xs hidden-sm">
+				<div class="desk-sidebar list-unstyled sidebar-menu"></div>
+			</div>
+		`).appendTo(this.wrapper.find(".layout-side-section"));
+		this.sidebar = list_sidebar.find(".desk-sidebar");
+	}
+
+	async setup_pages(reload) {
+		// !this.discard && this.create_page_skeleton();
+		!this.discard && this.create_sidebar_skeleton();
+		this.sidebar_pages = !this.discard ? await this.get_pages() : this.sidebar_pages;
+		this.cached_pages = $.extend(true, {}, this.sidebar_pages);
+		this.all_pages = this.sidebar_pages.pages;
+		this.has_access = this.sidebar_pages.has_access;
+
+		this.all_pages.forEach((page) => {
+			page.is_editable = !page.public || this.has_access;
+		});
+
+		this.public_pages = this.all_pages.filter((page) => page.public);
+		this.private_pages = this.all_pages.filter((page) => !page.public);
+
+		if (this.all_pages) {
+			frappe.workspaces = {};
+			for (let page of this.all_pages) {
+				frappe.workspaces[frappe.router.slug(page.name)] = {
+					title: page.title,
+					public: page.public,
+				};
+			}
+			this.make_sidebar();
+			reload && this.show();
+		}
+	}
+
+	create_sidebar_skeleton() {
+		if ($(".workspace-sidebar-skeleton").length) return;
+
+		$(frappe.render_template("workspace_sidebar_loading_skeleton")).insertBefore(this.sidebar);
+		this.sidebar.addClass("hidden");
+	}
+
+	get_pages() {
+		return frappe.xcall("frappe.desk.desktop.get_workspace_sidebar_items");
+	}
+
+	show() {
+		if (!this.all_pages) {
+			// pages not yet loaded, call again after a bit
+			setTimeout(() => this.show(), 100);
+			return;
+		}
+
+		let page = this.get_page_to_show();
+
+		if (!frappe.router.current_route[0]) {
+			frappe.route_flags.replace_route = true;
+			frappe.set_route(frappe.router.slug(page.public ? page.name : "private/" + page.name));
+			return;
+		}
+
+		this.page.set_title(__(page.name));
+		this.update_selected_sidebar(this.current_page, false); //remove selected from old page
+		this.update_selected_sidebar(page, true); //add selected on new page
+		this.show_page(page);
+	}
+
+	make_sidebar() {
+		if (this.sidebar.find(".standard-sidebar-section")[0]) {
+			this.sidebar.find(".standard-sidebar-section").remove();
+		}
+
+		this.sidebar_categories.forEach((category) => {
+			let root_pages = this.public_pages.filter(
+				(page) => page.parent_page == "" || page.parent_page == null
+			);
+			if (category != "Public") {
+				root_pages = this.private_pages.filter(
+					(page) => page.parent_page == "" || page.parent_page == null
+				);
+			}
+			root_pages = root_pages.uniqBy((d) => d.title);
+			this.build_sidebar_section(category, root_pages);
+		});
+
+		// Scroll sidebar to selected page if it is not in viewport.
+		this.sidebar.find(".selected").length &&
+			!frappe.dom.is_element_in_viewport(this.sidebar.find(".selected")) &&
+			this.sidebar.find(".selected")[0].scrollIntoView();
+
+		this.remove_sidebar_skeleton();
+		this.setup_sidebar_toggle(".layout-side-section", $(".layout-side-section").parent(), this.sidebar);
+		this.showSidebarToggleButton();
+	}
+
+	remove_sidebar_skeleton() {
+		this.sidebar.removeClass("hidden");
+		$(".workspace-sidebar-skeleton").remove();
+	}
+
+	build_sidebar_section(title, root_pages) {
+		let sidebar_section = $(
+			`<div class="standard-sidebar-section nested-container" data-title="${title}"></div>`
+		);
+
+		let $title = $(`<div class="standard-sidebar-label">
+			<span>${frappe.utils.icon("es-line-down", "xs")}</span>
+			<span class="section-title">${__(title)}<span>
+		</div>`).appendTo(sidebar_section);
+		this.prepare_sidebar(root_pages, sidebar_section, this.sidebar);
+
+		$title.on("click", (e) => {
+			let icon =
+				$(e.target).find("span use").attr("href") === "#es-line-down"
+					? "#es-line-right-chevron"
+					: "#es-line-down";
+			$(e.target).find("span use").attr("href", icon);
+			$(e.target).parent().find(".sidebar-item-container").toggleClass("hidden");
+		});
+
+		if (Object.keys(root_pages).length === 0) {
+			sidebar_section.addClass("hidden");
+		}
+
+		if (
+			sidebar_section.find(".sidebar-item-container").length &&
+			sidebar_section.find("> [item-is-hidden='0']").length == 0
+		) {
+			sidebar_section.addClass("hidden show-in-edit-mode");
+		}
+	}
+	prepare_sidebar(items, child_container, item_container) {
+		items.forEach((item) => this.append_item(item, child_container));
+		child_container.appendTo(item_container);
+	}
+
+	append_item(item, container) {
+		let is_current_page =
+			frappe.router.slug(item.title) == frappe.router.slug(this.get_page_to_show().name) &&
+			item.public == this.get_page_to_show().public;
+		item.selected = is_current_page;
+		if (is_current_page) {
+			this.current_page = { name: item.title, public: item.public };
+		}
+
+		let $item_container = this.sidebar_item_container(item);
+		let sidebar_control = $item_container.find(".sidebar-item-control");
+
+		// this.add_sidebar_actions(item, sidebar_control);
+		let pages = item.public ? this.public_pages : this.private_pages;
+
+		let child_items = pages.filter((page) => page.parent_page == item.title);
+		if (child_items.length > 0) {
+			let child_container = $item_container.find(".sidebar-child-item");
+			child_container.addClass("hidden");
+			this.prepare_sidebar(child_items, child_container, $item_container);
+		}
+
+		$item_container.appendTo(container);
+		this.sidebar_items[item.public ? "public" : "private"][item.title] = $item_container;
+
+		if ($item_container.parent().hasClass("hidden") && is_current_page) {
+			$item_container.parent().toggleClass("hidden");
+		}
+
+		// this.add_drop_icon(item, sidebar_control, $item_container);
+
+		if (child_items.length > 0) {
+			$item_container.find(".drop-icon").first().addClass("show-in-edit-mode");
+		}
+	}
+
+	get_page_to_show() {
+		let default_page;
+
+		if (
+			localStorage.current_page &&
+			this.all_pages.filter((page) => page.title == localStorage.current_page).length != 0
+		) {
+			default_page = {
+				name: localStorage.current_page,
+				public: localStorage.is_current_page_public != "false",
+			};
+		} else if (Object.keys(this.all_pages).length !== 0) {
+			default_page = { name: this.all_pages[0].title, public: this.all_pages[0].public };
+		} else {
+			default_page = { name: "Build", public: true };
+		}
+
+		const route = frappe.get_route();
+		const page = (route[1] == "private" ? route[2] : route[1]) || default_page.name;
+		const is_public = route[1] ? route[1] != "private" : default_page.public;
+		return { name: page, public: is_public };
+	}
+
+	sidebar_item_container(item) {
+		item.indicator_color =
+			item.indicator_color || this.indicator_colors[Math.floor(Math.random() * 12)];
+
+		return $(`
+			<div
+				class="sidebar-item-container ${item.is_editable ? "is-draggable" : ""}"
+				item-parent="${item.parent_page}"
+				item-name="${item.title}"
+				item-public="${item.public || 0}"
+				item-is-hidden="${item.is_hidden || 0}"
+			>
+				<div class="desk-sidebar-item standard-sidebar-item ${item.selected ? "selected" : ""}">
+					<a
+						href="/app/${
+							item.public
+								? frappe.router.slug(item.title)
+								: "private/" + frappe.router.slug(item.title)
+						}"
+						class="item-anchor ${item.is_editable ? "" : "block-click"}" title="${__(item.title)}"
+					>
+						<span class="sidebar-item-icon" item-icon=${item.icon || "folder-normal"}>
+							${
+								item.public
+									? frappe.utils.icon(item.icon || "folder-normal", "md")
+									: `<span class="indicator ${item.indicator_color}"></span>`
+							}
+						</span>
+						<span class="sidebar-item-label ${item.selected ? "selected" : ""}">${__(item.title)}<span>
+					</a>
+					<div class="sidebar-item-control"></div>
+				</div>
+				<div class="sidebar-child-item nested-container"></div>
+			</div>
+		`);
+	}
+
+	add_sidebar_actions(item, sidebar_control, is_new) {
+		if (!item.is_editable) {
+			sidebar_control.parent().click(() => {
+				!this.is_read_only &&
+					frappe.show_alert(
+						{
+							message: __("Only Workspace Manager can sort or edit this page"),
+							indicator: "info",
+						},
+						5
+					);
+			});
+
+			frappe.utils.add_custom_button(
+				frappe.utils.icon("es-line-duplicate", "sm"),
+				() => this.duplicate_page(item),
+				"duplicate-page",
+				__("Duplicate Workspace"),
+				null,
+				sidebar_control
+			);
+		} else if (item.is_hidden) {
+			frappe.utils.add_custom_button(
+				frappe.utils.icon("es-line-preview", "sm"),
+				(e) => this.unhide_workspace(item, e),
+				"unhide-workspace-btn",
+				__("Unhide Workspace"),
+				null,
+				sidebar_control
+			);
+		} else {
+			frappe.utils.add_custom_button(
+				frappe.utils.icon("es-line-drag", "xs"),
+				null,
+				"drag-handle",
+				__("Drag"),
+				null,
+				sidebar_control
+			);
+
+			// !is_new && this.add_settings_button(item, sidebar_control);
+		}
+	}
+
+	
 
 	make() {
 		this.wrapper = $(this.parent);
 		this.add_main_section();
 		this.setup_scroll_handler();
-		this.setup_sidebar_toggle();
+		// this.setup_sidebar_toggle(".layout-side-section", $(".page-head"), this.sidebar);
+		this.setup_sidebar_toggle(".layout-page-side-section", $(".page-side-head", this.page_sidebar));
+		$(window).on("resize", this.showSidebarToggleButton)
+
 	}
 
 	setup_scroll_handler() {
@@ -85,10 +393,10 @@ frappe.ui.Page = class Page {
 		const isDesk = frappe.get_route().includes("Workspaces");
 
 		if (isMobile || !isDesk) {
-			return false;
+			return document.querySelector(".sidebar-toggle-btn-internal").classList.add("d-none")
 		}
 
-		return true;
+		return document.querySelector(".sidebar-toggle-btn-internal").classList.remove("d-none")
 	}
 
 	add_main_section() {
@@ -111,17 +419,43 @@ frappe.ui.Page = class Page {
 				<div class="row layout-main">
 					<div class="col-lg-2 layout-side-section-wrap">
 						<div class="layout-side-section"></div>
-						${this.showSidebarToggleButton() ? `<button class="btn-reset sidebar-toggle-btn-internal" style="">
+						<button class="btn-reset sidebar-toggle-btn-internal">
 							<span class="sidebar-toggle-icon">
 								<svg class="es-icon icon-md">
 									<use href="#es-line-sidebar-expand">
 									</use>
 								</svg>
 							</span>
-						</button>` : ''}
+						</button>
 					</div>
 					<div class="col layout-main-section-wrapper">
-						<div class="layout-main-section"></div>
+						<div class="d-flex flex-column layout-page-container">
+							<div class="layout-page-side-head">
+								<div class="page-title">
+									<div class="flex fill-width title-area">
+										<div>
+											<div class="flex">
+												<h3 class="ellipsis title-text"></h3>
+												<span class="indicator-pill whitespace-nowrap"></span>
+											</div>
+											<div class="ellipsis sub-heading hide text-muted"></div>
+										</div>
+										<button class="btn btn-default more-button hide">
+											<svg class="icon icon-sm">
+												<use href="#icon-dot-horizontal">
+												</use>
+											</svg>
+										</button>
+									</div>				
+								</div>			
+							</div>
+							<div class="d-flex flex-row">
+								<div class="col-lg-2 layout-page-side-section-wrap d-none">
+									<div class="layout-page-side-section"></div>
+								</div>
+								<div class="layout-main-section"></div>
+							</div>
+						</div>
 						<div class="layout-footer hide"></div>
 					</div>
 				</div>
@@ -144,6 +478,7 @@ frappe.ui.Page = class Page {
 		this.body = this.main = this.wrapper.find(".layout-main-section");
 		this.container = this.wrapper.find(".page-body");
 		this.sidebar = this.wrapper.find(".layout-side-section");
+		this.page_sidebar = this.wrapper.find(".layout-page-side-section");
 		this.footer = this.wrapper.find(".layout-footer");
 		this.indicator = this.wrapper.find(".indicator-pill");
 
@@ -184,9 +519,9 @@ frappe.ui.Page = class Page {
 			.add(action_btn, action_btn.find(".actions-btn-group-label"));
 	}
 
-	setup_sidebar_toggle() {
-		let sidebar_toggle = $(".page-head").find(".sidebar-toggle-btn");
-		let sidebar_wrapper = this.wrapper.find(".layout-side-section");
+	setup_sidebar_toggle(sidebar_wrapper_selector, toggle_btn_wrapper, sidebar) {
+		let sidebar_toggle = toggle_btn_wrapper.find(".sidebar-toggle-btn-internal");
+		let sidebar_wrapper = this.wrapper.find(sidebar_wrapper_selector);
 		if (this.disable_sidebar_toggle || !sidebar_wrapper.length) {
 			sidebar_toggle.remove();
 		} else {
@@ -196,28 +531,29 @@ frappe.ui.Page = class Page {
 			});
 			sidebar_toggle.click(() => {
 				if (frappe.utils.is_xs() || frappe.utils.is_sm()) {
-					this.setup_overlay_sidebar();
+					this.setup_overlay_sidebar(sidebar);
 				} else {
 					sidebar_wrapper.toggle();
 				}
 				$(document.body).trigger("toggleSidebar");
-				this.update_sidebar_icon();
+				this.update_sidebar_icon(toggle_btn_wrapper);
 			});
 		}
 	}
 
-	setup_overlay_sidebar() {
-		this.sidebar.find(".close-sidebar").remove();
-		let overlay_sidebar = this.sidebar.find(".overlay-sidebar").addClass("opened");
-		$('<div class="close-sidebar">').hide().appendTo(this.sidebar).fadeIn();
+	setup_overlay_sidebar(sidebar) {
+		sidebar.find(".close-sidebar").remove();
+		let overlay_sidebar = sidebar.find(".overlay-sidebar").addClass("opened");
+		let closeSidebar = $('<div class="close-sidebar"></div>').hide(); // Створюємо елемент
+		closeSidebar.appendTo(sidebar).fadeIn(); // Додаємо до sidebar і показуємо
 		let scroll_container = $("html").css("overflow-y", "hidden");
 
-		this.sidebar.find(".close-sidebar").on("click", (e) => this.close_sidebar(e));
-		this.sidebar.on("click", "button:not(.dropdown-toggle)", (e) => this.close_sidebar(e));
+		sidebar.find(".close-sidebar").on("click", (e) => this.close_sidebar(e));
+		sidebar.on("click", "button:not(.dropdown-toggle)", (e) => this.close_sidebar(e));
 
 		this.close_sidebar = () => {
 			scroll_container.css("overflow-y", "");
-			this.sidebar.find("div.close-sidebar").fadeOut(() => {
+			sidebar.find("div.close-sidebar").fadeOut(() => {
 				overlay_sidebar
 					.removeClass("opened")
 					.find(".dropdown-toggle")
@@ -226,8 +562,8 @@ frappe.ui.Page = class Page {
 		};
 	}
 
-	update_sidebar_icon() {
-		let sidebar_toggle = $(".page-head").find(".sidebar-toggle-btn");
+	update_sidebar_icon(jq_wrapper) {
+		let sidebar_toggle = jq_wrapper.find(".sidebar-toggle-btn");
 		let sidebar_toggle_icon = sidebar_toggle.find(".sidebar-toggle-icon");
 		let sidebar_wrapper = this.wrapper.find(".layout-side-section");
 		let is_sidebar_visible = $(sidebar_wrapper).is(":visible");

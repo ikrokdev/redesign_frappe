@@ -1,6 +1,7 @@
 html,
 body {
-	background-color: var(--bg-color);
+	// background-color: var(--bg-color);
+	background-color: var(--redisign-neutral-lightest-default, #F5F6FF);
 
 	::selection {
 		color: var(--neutral-black);

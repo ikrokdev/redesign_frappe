@@ -6,14 +6,24 @@
 }
 /*! This comment will be included even in compressed mode. */
 #navbar-breadcrumbs {
+	flex-direction: row;
 	margin-left: var(--margin-md);
-	@include get_textstyle("base", "regular");
+	@include get_textstyle("3xl", "regular");
 	a {
 		margin-right: 10px;
-		&:before {
+	}
+	span{
+		vertical-align: text-bottom;
+	}
+	li{
+		&:first-of-type{
+			align-content: end;
+		}
+		&:not(:first-of-type):before {
 			content: #{"/*!rtl:var(--left-arrow-svg);*/"}var(--right-arrow-svg);
 			display: inline-block;
 			margin-right: 10px;
+			vertical-align: text-bottom;
 		}
 	}
 

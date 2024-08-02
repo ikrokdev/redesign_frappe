@@ -19,8 +19,10 @@ frappe.views.ListSidebar = class ListSidebar {
 
 		this.sidebar = $('<div class="list-sidebar overlay-sidebar hidden-xs hidden-sm"></div>')
 			.html(sidebar_content)
-			.appendTo(this.page.sidebar.empty());
+			.appendTo(this.page.page_sidebar.empty());
 
+		this.page.page_sidebar[0].parentElement.classList.remove("d-none");
+		this.page.page_sidebar[0].parentElement.classList.add("d-flex");
 		this.setup_list_filter();
 		this.setup_list_group_by();
 
@@ -112,7 +114,7 @@ frappe.views.ListSidebar = class ListSidebar {
 		// add reports linked to this doctype to the dropdown
 		var me = this;
 		var added = [];
-		var dropdown = this.page.sidebar.find(".reports-dropdown");
+		var dropdown = this.page.page_sidebar.find(".reports-dropdown");
 		var divider = false;
 
 		var add_reports = function (reports) {
@@ -159,14 +161,14 @@ frappe.views.ListSidebar = class ListSidebar {
 
 	setup_list_filter() {
 		this.list_filter = new ListFilter({
-			wrapper: this.page.sidebar.find(".list-filters"),
+			wrapper: this.page.page_sidebar.find(".list-filters"),
 			doctype: this.doctype,
 			list_view: this.list_view,
 		});
 	}
 
 	setup_kanban_boards() {
-		const $dropdown = this.page.sidebar.find(".kanban-dropdown");
+		const $dropdown = this.page.page_sidebar.find(".kanban-dropdown");
 		frappe.views.KanbanView.setup_dropdown_in_sidebar(this.doctype, $dropdown);
 	}
 

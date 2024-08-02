@@ -193,7 +193,7 @@ frappe.views.Workspace = class Workspace {
 
         sidebar_toggle.click(() => {
             if (frappe.utils.is_xs() || frappe.utils.is_sm()) {
-                this.setup_overlay_sidebar();
+                this.setup_overlay_sidebar(this.sidebar.parent().parent());
             } else {
                 this.toggle_sidebar_labels();
 
@@ -204,18 +204,18 @@ frappe.views.Workspace = class Workspace {
     }
 	}
 
-	setup_overlay_sidebar() {
-    this.sidebar.find(".close-sidebar").remove();
-    let overlay_sidebar = this.sidebar.find(".overlay-sidebar").addClass("opened");
-    $('<div class="close-sidebar">').hide().appendTo(this.sidebar).fadeIn();
+	setup_overlay_sidebar(sidebar) {
+    sidebar.find(".close-sidebar").remove();
+    let overlay_sidebar = sidebar.find(".overlay-sidebar").addClass("opened");
+    $('<div class="close-sidebar">').hide().appendTo(sidebar).fadeIn();
     let scroll_container = $("html").css("overflow-y", "hidden");
 
-    this.sidebar.find(".close-sidebar").on("click", (e) => this.close_sidebar(e));
-    this.sidebar.on("click", "button:not(.dropdown-toggle)", (e) => this.close_sidebar(e));
+    sidebar.find(".close-sidebar").on("click", (e) => this.close_sidebar(e));
+    sidebar.on("click", "button:not(.dropdown-toggle)", (e) => this.close_sidebar(e));
 
     this.close_sidebar = () => {
         scroll_container.css("overflow-y", "");
-        this.sidebar.find("div.close-sidebar").fadeOut(() => {
+        sidebar.find("div.close-sidebar").fadeOut(() => {
             overlay_sidebar
                 .removeClass("opened")
                 .find(".dropdown-toggle")

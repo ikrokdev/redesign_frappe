@@ -3,7 +3,7 @@
 		<a class="navbar-brand navbar-home" href="/app">
 			<img class="app-logo" style="width: {{ navbar_settings.logo_width || 28 }}px" src="{{ frappe.boot.app_logo_url }}">
 		</a>
-		<ul class="nav navbar-nav d-none d-sm-flex" id="navbar-breadcrumbs"></ul>
+		<!-- <ul class="nav navbar-nav d-none d-sm-flex" id="navbar-breadcrumbs"></ul> -->
 		<div class="collapse navbar-collapse justify-content-end">
 			<form class="form-inline fill-width justify-content-end" role="search" onsubmit="return false;">
 				{% if (frappe.boot.read_only) { %}
