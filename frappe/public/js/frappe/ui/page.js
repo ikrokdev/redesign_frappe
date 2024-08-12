@@ -262,7 +262,7 @@ frappe.ui.Page = class Page{
 
 	sidebar_item_container(item) {
 		item.indicator_color =
-			item.indicator_color || this.indicator_colors[Math.floor(Math.random() * 12)];
+			item.indicator_color || this.indicator_colors[0];
 
 		return $(`
 			<div
@@ -290,7 +290,6 @@ frappe.ui.Page = class Page{
 						</span>
 						<span class="sidebar-item-label ${item.selected ? "selected" : ""}">${__(item.title)}<span>
 					</a>
-					<div class="sidebar-item-control"></div>
 				</div>
 				<div class="sidebar-child-item nested-container"></div>
 			</div>
@@ -418,7 +417,7 @@ frappe.ui.Page = class Page{
 				`
 				<div class="row layout-main">
 					<div class="col-lg-2 layout-side-section-wrap">
-						<div class="layout-side-section"></div>
+						<div class="layout-side-section no-padding"></div>
 						<button class="btn-reset sidebar-toggle-btn-internal">
 							<span class="sidebar-toggle-icon">
 								<svg class="es-icon icon-md">
@@ -450,7 +449,7 @@ frappe.ui.Page = class Page{
 								</div>			
 							</div>
 							<div class="d-flex flex-row">
-								<div class="col-lg-2 layout-page-side-section-wrap d-none">
+								<div class="col-lg-2 layout-page-side-section-wrap hidden-sm hidden-xs d-none">
 									<div class="layout-page-side-section"></div>
 								</div>
 								<div class="layout-main-section"></div>
