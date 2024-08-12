@@ -30,6 +30,7 @@ frappe.ui.Page = class Page{
 		$.extend(this, opts);
 
 		this.set_document_title = true;
+		this.show_global_sidebar = this.title !== "Workspace";
 		this.buttons = {};
 		this.fields_dict = {};
 		this.views = {};
@@ -58,7 +59,9 @@ frappe.ui.Page = class Page{
 		];
 
 		this.make();
-		this.prepare_sidebar_wrap();
+		// if (this.show_global_sidebar) {
+			this.prepare_sidebar_wrap();
+		// }
 		this.setup_pages();
 		frappe.ui.pages[frappe.get_route_str()] = this;
 	}
@@ -95,7 +98,9 @@ frappe.ui.Page = class Page{
 					public: page.public,
 				};
 			}
-			this.make_sidebar();
+			if (this.show_global_sidebar) {
+				this.make_sidebar();
+			} 
 			reload && this.show();
 		}
 	}
