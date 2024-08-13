@@ -421,7 +421,7 @@ frappe.ui.Page = class Page{
 							</span>\
 						</button>\
 					</div>\
-					<div class="col-md-10 layout-main-section-wrapper">\
+					<div class="col-lg-10 layout-main-section-wrapper">\
 						<div class="layout-main-section"></div>\
 						<div class="layout-footer hide"></div>\
 					</div>\

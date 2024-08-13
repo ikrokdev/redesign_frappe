@@ -296,3 +296,9 @@
 	margin-top: var(--margin-xs);
 	text-align: center;
 }
+
+@media screen and (max-width: 768px) {
+	.doctype-form-builder-container{
+		flex-direction: column;
+	}
+}

@@ -29,7 +29,7 @@ onMounted(() => store.fetch());
 	<div
 		v-if="should_render"
 		ref="container"
-		class="form-builder-container"
+		class="form-builder-container doctype-form-builder-container"
 		@click="store.form.selected_field = null"
 	>
 		<div class="form-container">
