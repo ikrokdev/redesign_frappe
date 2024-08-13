@@ -397,10 +397,10 @@ frappe.ui.Page = class Page{
 		const isDesk = frappe.get_route().includes("Workspaces");
 
 		if (isMobile || !isDesk) {
-			return document.querySelector(".sidebar-toggle-btn-internal").classList.add("d-none")
+			return document.querySelector(".sidebar-toggle-btn-internal")?.classList.add("d-none")
 		}
 
-		return document.querySelector(".sidebar-toggle-btn-internal").classList.remove("d-none")
+		return document.querySelector(".sidebar-toggle-btn-internal")?.classList.remove("d-none")
 	}
 
 	add_main_section() {
@@ -410,7 +410,18 @@ frappe.ui.Page = class Page{
 			this.add_view(
 				"main",
 				'<div class="row layout-main">\
-					<div class="col-md-12 layout-main-section-wrapper">\
+				<div class="col-lg-2 layout-side-section-wrap">\
+						<div class="layout-side-section no-padding"></div>\
+						<button class="btn-reset sidebar-toggle-btn-internal">\
+							<span class="sidebar-toggle-icon">\
+								<svg class="es-icon icon-md">\
+									<use href="#es-line-sidebar-expand">\
+									</use>\
+								</svg>\
+							</span>\
+						</button>\
+					</div>\
+					<div class="col-md-10 layout-main-section-wrapper">\
 						<div class="layout-main-section"></div>\
 						<div class="layout-footer hide"></div>\
 					</div>\

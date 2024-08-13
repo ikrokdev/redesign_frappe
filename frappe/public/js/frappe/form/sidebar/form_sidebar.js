@@ -69,8 +69,8 @@ frappe.ui.form.Sidebar = class {
 			this.sidebar.toggle(false);
 			this.page.page_sidebar.addClass("hide-sidebar");
 		} else {
-			this.page.page_sidebar[0].parentElement.classList.add("d-flex");
-			this.page.page_sidebar[0].parentElement.classList.remove("d-none");
+			this.page.page_sidebar[0]?.parentElement.classList.add("d-flex");
+			this.page.page_sidebar[0]?.parentElement.classList.remove("d-none");
 			this.page.page_sidebar.removeClass("hide-sidebar");
 			this.sidebar.toggle(true);
 			this.frm.assign_to.refresh();
