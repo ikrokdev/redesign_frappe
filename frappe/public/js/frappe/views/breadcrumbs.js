@@ -94,7 +94,7 @@ frappe.breadcrumbs = {
 		const icon_name = curr_page_breadcrumb?.icon;
 
 		// Create icon and append it to breadcrumbs
-		if(label == curr_page_breadcrumb.label && icon_name){
+		if(label == curr_page_breadcrumb?.label && icon_name){
 			const icon = document.createElement("span");
 			icon.classList.add('sidebar-item-icon');
 			

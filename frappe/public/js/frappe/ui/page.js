@@ -30,6 +30,7 @@ frappe.ui.Page = class Page{
 		$.extend(this, opts);
 
 		this.set_document_title = true;
+		this.show_global_sidebar = this.title !== "Workspace";
 		this.buttons = {};
 		this.fields_dict = {};
 		this.views = {};
@@ -58,7 +59,9 @@ frappe.ui.Page = class Page{
 		];
 
 		this.make();
-		this.prepare_sidebar_wrap();
+		// if (this.show_global_sidebar) {
+			this.prepare_sidebar_wrap();
+		// }
 		this.setup_pages();
 		frappe.ui.pages[frappe.get_route_str()] = this;
 	}
@@ -95,7 +98,9 @@ frappe.ui.Page = class Page{
 					public: page.public,
 				};
 			}
-			this.make_sidebar();
+			if (this.show_global_sidebar) {
+				this.make_sidebar();
+			} 
 			reload && this.show();
 		}
 	}
@@ -262,7 +267,7 @@ frappe.ui.Page = class Page{
 
 	sidebar_item_container(item) {
 		item.indicator_color =
-			item.indicator_color || this.indicator_colors[Math.floor(Math.random() * 12)];
+			item.indicator_color || this.indicator_colors[0];
 
 		return $(`
 			<div
@@ -290,7 +295,6 @@ frappe.ui.Page = class Page{
 						</span>
 						<span class="sidebar-item-label ${item.selected ? "selected" : ""}">${__(item.title)}<span>
 					</a>
-					<div class="sidebar-item-control"></div>
 				</div>
 				<div class="sidebar-child-item nested-container"></div>
 			</div>
@@ -393,10 +397,10 @@ frappe.ui.Page = class Page{
 		const isDesk = frappe.get_route().includes("Workspaces");
 
 		if (isMobile || !isDesk) {
-			return document.querySelector(".sidebar-toggle-btn-internal").classList.add("d-none")
+			return document.querySelector(".sidebar-toggle-btn-internal")?.classList.add("d-none")
 		}
 
-		return document.querySelector(".sidebar-toggle-btn-internal").classList.remove("d-none")
+		return document.querySelector(".sidebar-toggle-btn-internal")?.classList.remove("d-none")
 	}
 
 	add_main_section() {
@@ -406,7 +410,18 @@ frappe.ui.Page = class Page{
 			this.add_view(
 				"main",
 				'<div class="row layout-main">\
-					<div class="col-md-12 layout-main-section-wrapper">\
+				<div class="col-lg-2 layout-side-section-wrap">\
+						<div class="layout-side-section no-padding"></div>\
+						<button class="btn-reset sidebar-toggle-btn-internal">\
+							<span class="sidebar-toggle-icon">\
+								<svg class="es-icon icon-md">\
+									<use href="#es-line-sidebar-expand">\
+									</use>\
+								</svg>\
+							</span>\
+						</button>\
+					</div>\
+					<div class="col-lg-10 layout-main-section-wrapper">\
 						<div class="layout-main-section"></div>\
 						<div class="layout-footer hide"></div>\
 					</div>\
@@ -418,7 +433,7 @@ frappe.ui.Page = class Page{
 				`
 				<div class="row layout-main">
 					<div class="col-lg-2 layout-side-section-wrap">
-						<div class="layout-side-section"></div>
+						<div class="layout-side-section no-padding"></div>
 						<button class="btn-reset sidebar-toggle-btn-internal">
 							<span class="sidebar-toggle-icon">
 								<svg class="es-icon icon-md">
@@ -450,7 +465,7 @@ frappe.ui.Page = class Page{
 								</div>			
 							</div>
 							<div class="d-flex flex-row">
-								<div class="col-lg-2 layout-page-side-section-wrap d-none">
+								<div class="col-lg-2 layout-page-side-section-wrap hidden-sm hidden-xs d-none">
 									<div class="layout-page-side-section"></div>
 								</div>
 								<div class="layout-main-section"></div>
@@ -543,9 +558,12 @@ frappe.ui.Page = class Page{
 
 	setup_overlay_sidebar(sidebar) {
 		sidebar.find(".close-sidebar").remove();
-		let overlay_sidebar = sidebar.find(".overlay-sidebar").addClass("opened");
-		let closeSidebar = $('<div class="close-sidebar"></div>').hide(); // Створюємо елемент
-		closeSidebar.appendTo(sidebar).fadeIn(); // Додаємо до sidebar і показуємо
+		let overlay_sidebar = sidebar.find(".overlay-sidebar").length !== 0
+		? sidebar.find(".overlay-sidebar").addClass("opened")
+		: sidebar.parent().addClass("opened");
+
+		let closeSidebar = $('<div class="close-sidebar"></div>').hide();
+		closeSidebar.appendTo(sidebar).fadeIn();
 		let scroll_container = $("html").css("overflow-y", "hidden");
 
 		sidebar.find(".close-sidebar").on("click", (e) => this.close_sidebar(e));

@@ -52,6 +52,10 @@ select.form-control {
 	padding-block: 0;
 }
 
+#language-switcher select.form-control {
+		margin: 0.5rem;
+}
+
 .frappe-control .control-input {
 
 	.action-btn,
