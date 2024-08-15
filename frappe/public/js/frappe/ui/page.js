@@ -558,9 +558,12 @@ frappe.ui.Page = class Page{
 
 	setup_overlay_sidebar(sidebar) {
 		sidebar.find(".close-sidebar").remove();
-		let overlay_sidebar = sidebar.find(".overlay-sidebar").addClass("opened");
-		let closeSidebar = $('<div class="close-sidebar"></div>').hide(); // Створюємо елемент
-		closeSidebar.appendTo(sidebar).fadeIn(); // Додаємо до sidebar і показуємо
+		let overlay_sidebar = sidebar.find(".overlay-sidebar").length !== 0
+		? sidebar.find(".overlay-sidebar").addClass("opened")
+		: sidebar.parent().addClass("opened");
+
+		let closeSidebar = $('<div class="close-sidebar"></div>').hide();
+		closeSidebar.appendTo(sidebar).fadeIn();
 		let scroll_container = $("html").css("overflow-y", "hidden");
 
 		sidebar.find(".close-sidebar").on("click", (e) => this.close_sidebar(e));
