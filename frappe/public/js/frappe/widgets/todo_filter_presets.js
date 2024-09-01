@@ -1,14 +1,20 @@
+const today = new Date().toISOString().split('T')[0];
+
 export default filter_presets = [
-  { title: "Default",
+  { title: "All",
     id: "0",
     configuration: []
   },
-  { title: "Open",
+  { title: "Due today",
     id: "1",
-    configuration:  [["Task","status","=","Open",false]]
+    configuration:  [["Task","exp_end_date","=", today, false]]
   },
-  { title: "Completed",
+  { title: "Overdue",
     id: "2",
-    configuration: [["Task","status","=","Completed",false]]
+    configuration: [["Task","exp_end_date","<", today, false]]
+  },
+  { title: "Upcoming",
+    id: "3",
+    configuration: [["Task","exp_end_date",">", today, false]]
   }
 ]
