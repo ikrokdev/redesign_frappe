@@ -19,6 +19,8 @@ export default class QuickListWidgetMultiple extends Widget {
 
 	set_actions() {
 		if (this.in_customize_mode) return;
+		this.setup_tabbed_layout();
+		this.setup_tab_events();
 
 		this.setup_fields_list_button().then(() => {
 			this.setup_add_new_button();
@@ -77,6 +79,67 @@ export default class QuickListWidgetMultiple extends Widget {
 		this.body.empty();
 		this.set_body();
 		this.fields_list.on("click", () => this.show_list_settings());
+	}
+	//setting up tabs
+	setup_tabbed_layout() {
+		$(`
+			<div class="form-tabs-list">
+				<ul class="nav form-tabs" id="form-tabs" role="tablist"></ul>
+			</div>
+		`).appendTo(this.body);
+		this.tab_link_container = this.body.find(".form-tabs");
+		this.tabs_content = $(`<div class="form-tab-content tab-content"></div>`).appendTo(
+			this.body
+		);
+		this.setup_events();
+	}
+
+	setup_events() {
+		let last_scroll = 0;
+		let tabs_list = $(".form-tabs-list");
+		let tabs_content = this.tabs_content[0];
+		if (!tabs_list.length) return;
+
+		$(window).scroll(
+			frappe.utils.throttle(() => {
+				let current_scroll = document.documentElement.scrollTop;
+				if (current_scroll > 0 && last_scroll <= current_scroll) {
+					tabs_list.removeClass("form-tabs-sticky-down");
+					tabs_list.addClass("form-tabs-sticky-up");
+				} else {
+					tabs_list.removeClass("form-tabs-sticky-up");
+					tabs_list.addClass("form-tabs-sticky-down");
+				}
+				last_scroll = current_scroll;
+			}, 500)
+		);
+
+		this.tab_link_container.off("click").on("click", ".nav-link", (e) => {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			$(e.currentTarget).tab("show");
+			if (tabs_content.getBoundingClientRect().top < 100) {
+				tabs_content.scrollIntoView();
+				setTimeout(() => {
+					$(".page-head").css("top", "-15px");
+					$(".form-tabs-list").removeClass("form-tabs-sticky-down");
+					$(".form-tabs-list").addClass("form-tabs-sticky-up");
+				}, 3);
+			}
+		});
+	}
+
+	setup_tab_events() {
+		this.wrapper.on("keydown", (ev) => {
+			if (ev.which == 9) {
+				let current = $(ev.target);
+				let doctype = current.attr("data-doctype");
+				let fieldname = current.attr("data-fieldname");
+				if (doctype) {
+					return this.handle_tab(doctype, fieldname, ev.shiftKey);
+				}
+			}
+		});
 	}
  //v2
 

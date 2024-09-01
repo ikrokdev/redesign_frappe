@@ -1,5 +1,6 @@
 import ListSettings from "../../../../../../../sites/assets/frappe/js/frappe/list/list_settings.js";
 import Widget from "./base_widget.js";
+import todo_filter_presets from "./todo_filter_presets.js";
 
 frappe.provide("frappe.utils");
 
@@ -24,6 +25,9 @@ export default class QuickListWidget extends Widget {
 			this.setup_add_new_button();
 			this.setup_refresh_list_button();
 			this.setup_filter_list_button();
+			if (this.document_type === "Task") {
+				this.setup_filters_preset();
+			}
 		});
 	}
 
@@ -275,6 +279,43 @@ export default class QuickListWidget extends Widget {
 
 		this.filter_list.appendTo(this.action_area);
 		this.filter_list.on("click", () => this.setup_filter_dialog());
+	}
+
+	set_ql_filter(filters) { 
+		let old_filter = this.quick_list_filter;
+		this.quick_list_filter = JSON.stringify(filters);
+
+		if (old_filter != this.quick_list_filter) {
+			this.body.empty();
+			this.set_footer();
+			this.set_body();
+		}
+	}
+
+	setup_filters_preset() {
+		this.filter_presets_list = $(
+			`<div>
+				${todo_filter_presets.map((item) => {
+					return `<div 
+						class="filter-list filter-preset button m-1 btn btn-xs"
+						id="filter_preset_${item.id}"
+						title="${__(item.title)}">
+						${item.title}
+					</div>`
+				}).join('')}
+			</div>`
+		);
+		//this.action_area.parent().find(".widget-label")
+		this.filter_presets_list.appendTo(this.action_area.parent().find(".widget-label"));
+		this.filter_presets_list.on("click", (e) => {
+			const target = e.target;
+			if (target.classList.contains("filter-preset") ) {
+				// console.log("hello ", e.target.id);
+				const id = target.id.replace("filter_preset_", "");
+				const item = todo_filter_presets.find((item) => item.id === id);
+				this.set_ql_filter(item.configuration);
+			}
+		});
 	}
 
 	setup_filter(doctype) {
