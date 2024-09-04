@@ -190,78 +190,6 @@ class QuickListDialog extends WidgetDialog {
 	}
 }
 
-class QuickListMultipleDialog extends WidgetDialog {
-	constructor(opts) {
-		super(opts);
-	}
-
-	get_fields() {
-		return [
-			{
-				fieldtype: "Link",
-				fieldname: "document_type",
-				label: "DocType",
-				options: "DocType",
-				reqd: 1,
-				onchange: () => {
-					this.document_type = this.dialog.get_value("document_type");
-					this.document_type && this.setup_filter(this.document_type);
-				},
-				get_query: () => {
-					return {
-						filters: {
-							issingle: 0,
-							istable: 0,
-						},
-					};
-				},
-			},
-			{
-				fieldtype: "Column Break",
-				fieldname: "column_break_4",
-			},
-			{
-				fieldtype: "Data",
-				fieldname: "label",
-				label: "Label",
-			},
-			{
-				fieldtype: "Section Break",
-				fieldname: "filter_section",
-				label: __("Add Filters"),
-				depends_on: "eval: doc.document_type",
-			},
-			{
-				fieldtype: "HTML",
-				fieldname: "filter_area_loading",
-			},
-			{
-				fieldtype: "HTML",
-				fieldname: "filter_area",
-			},
-		];
-	}
-
-	generate_filter_from_json() {
-		if (this.values && this.values.quick_list_multiple_filter) {
-			this.filters = frappe.utils.get_filter_from_json(
-				this.values.quick_list_multiple_filter,
-				this.values.document_type
-			);
-		}
-	}
-
-	process_data(data) {
-		if (this.filter_group) {
-			let filters = this.filter_group.get_filters();
-			data.quick_list_multiple_filter = JSON.stringify(filters);
-		}
-
-		data.label = data.label ? data.label : data.document_type;
-		return data;
-	}
-}
-
 class OnboardingDialog extends WidgetDialog {
 	constructor(opts) {
 		super(opts);
@@ -850,7 +778,6 @@ export default function get_dialog_constructor(type) {
 		links: CardDialog,
 		onboarding: OnboardingDialog,
 		quick_list: QuickListDialog,
-		quick_list_multiple: QuickListMultipleDialog,
 		number_card: NumberCardDialog,
 		custom_block: CustomBlockDialog,
 	};

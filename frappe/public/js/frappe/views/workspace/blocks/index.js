@@ -7,7 +7,6 @@ import Shortcut from "./shortcut";
 import Spacer from "./spacer";
 import Onboarding from "./onboarding";
 import QuickList from "./quick_list";
-import QuickListMultiple from "./quick_list_multiple";
 import NumberCard from "./number_card";
 import CustomBlock from "./custom_block";
 
@@ -25,7 +24,6 @@ frappe.workspace_block.blocks = {
 	spacer: Spacer,
 	onboarding: Onboarding,
 	quick_list: QuickList,
-	quick_list_multiple: QuickListMultiple,
 	number_card: NumberCard,
 	custom_block: CustomBlock,
 };

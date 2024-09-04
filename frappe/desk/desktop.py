@@ -159,7 +159,6 @@ class Workspace:
 		self.shortcuts = {"items": self.get_shortcuts()}
 		self.onboardings = {"items": self.get_onboardings()}
 		self.quick_lists = {"items": self.get_quick_lists()}
-		self.quick_list_multiples = {"items": self.get_quick_list_multiples()}
 		self.number_cards = {"items": self.get_number_cards()}
 		self.custom_blocks = {"items": self.get_custom_blocks()}
 
@@ -314,23 +313,6 @@ class Workspace:
 				items.append(new_item)
 
 		return items
-	
-	@handle_not_exist
-	def get_quick_list_multiples(self):
-		items = []
-		quick_list_multiples = self.doc.quick_list_multiples
-
-		for item in quick_list_multiples:
-			if self.is_item_allowed(item.document_type, "doctype"):
-				new_item = item.as_dict().copy()
-
-				# Translate label
-				new_item["label"] = _(item.label) if item.label else _(item.document_type)
-
-				items.append(new_item)
-
-		return items
-
 
 	@handle_not_exist
 	def get_onboardings(self):
@@ -419,7 +401,6 @@ def get_desktop_page(page):
 			"cards": workspace.cards,
 			"onboardings": workspace.onboardings,
 			"quick_lists": workspace.quick_lists,
-			"quick_list_multiples": workspace.quick_list_multiples,
 			"number_cards": workspace.number_cards,
 			"custom_blocks": workspace.custom_blocks,
 		}
@@ -556,8 +537,6 @@ def save_new_widget(doc, page, blocks, new_widgets):
 			doc.shortcuts.extend(new_widget(widgets.shortcut, "Workspace Shortcut", "shortcuts"))
 		if widgets.quick_list:
 			doc.quick_lists.extend(new_widget(widgets.quick_list, "Workspace Quick List", "quick_lists"))
-		if widgets.quick_list_multiple:
-			doc.quick_list_multiples.extend(new_widget(widgets.quick_list_multiple, "Quick List Multiples", "quick_list_multiples"))
 		if widgets.custom_block:
 			doc.custom_blocks.extend(
 				new_widget(widgets.custom_block, "Workspace Custom Block", "custom_blocks")
@@ -595,20 +574,19 @@ def save_new_widget(doc, page, blocks, new_widgets):
 def clean_up(original_page, blocks):
 	page_widgets = {}
 
-	for wid in ["shortcut", "card", "chart", "quick_list", "quick_list_multiple", "number_card", "custom_block"]:
+	for wid in ["shortcut", "card", "chart", "quick_list", "number_card", "custom_block"]:
 		# get list of widget's name from blocks
 		page_widgets[wid] = [x["data"][wid + "_name"] for x in loads(blocks) if x["type"] == wid]
 
 	# shortcut, chart, quick_list, number_card & custom_block cleanup
-	for wid in ["shortcut", "chart", "quick_list", "quick_list_multiple", "number_card", "custom_block"]:
+	for wid in ["shortcut", "chart", "quick_list", "number_card", "custom_block"]:
 		updated_widgets = []
-		widget_name = wid + "s"
-		original_page.get(widget_name).reverse()
+		original_page.get(wid + "s").reverse()
 
-		for w in original_page.get(widget_name):
+		for w in original_page.get(wid + "s"):
 			if w.label in page_widgets[wid] and w.label not in [x.label for x in updated_widgets]:
 				updated_widgets.append(w)
-		original_page.set(widget_name, updated_widgets)
+		original_page.set(wid + "s", updated_widgets)
 
 	# card cleanup
 	for i, v in enumerate(original_page.links):
